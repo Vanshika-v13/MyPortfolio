@@ -179,6 +179,68 @@ Not found:
 }
 ```
 
+### Contact
+
+#### Submit contact form
+
+```
+POST /api/v1/contact
+```
+
+Accepts public contact form submissions. Rate limited to **5 requests per IP** every **15 minutes**.
+
+Request body:
+
+```json
+{
+  "name": "Jane Doe",
+  "email": "jane@example.com",
+  "message": "I would like to discuss a project opportunity."
+}
+```
+
+Success response (`201`):
+
+```json
+{
+  "success": true,
+  "message": "Message sent successfully"
+}
+```
+
+Validation error (`400`):
+
+```json
+{
+  "success": false,
+  "errors": [
+    {
+      "field": "email",
+      "message": "Please provide a valid email"
+    }
+  ]
+}
+```
+
+Rate limit exceeded (`429`):
+
+```json
+{
+  "success": false,
+  "message": "Too many contact requests. Please try again later."
+}
+```
+
+Field rules:
+
+| Field   | Rules                                      |
+|---------|--------------------------------------------|
+| `name`  | Required, 2–100 characters, trimmed          |
+| `email` | Required, valid email, stored lowercase      |
+| `message` | Required, 10–2000 characters, trimmed    |
+
+Incoming data is sanitized to prevent NoSQL injection and malformed payloads. Database and unexpected errors are handled by centralized error middleware.
+
 ### Certificates
 
 #### List all certificates
