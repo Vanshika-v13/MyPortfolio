@@ -31,14 +31,14 @@ backend/
 └── README.md
 ```
 
-## Getting Started
+## Installation
 
 ### Prerequisites
 
 - Node.js 18+
 - MongoDB (local or Atlas)
 
-### Installation
+### Setup
 
 ```bash
 cd backend
@@ -46,7 +46,18 @@ npm install
 cp .env.example .env
 ```
 
-Update `.env` with your values:
+### Environment Variables
+
+All four variables are **required**. The server will not start if any are missing or invalid.
+
+| Variable     | Description                                      | Example                              |
+|--------------|--------------------------------------------------|--------------------------------------|
+| `PORT`       | HTTP port (positive integer)                     | `5000`                               |
+| `MONGODB_URI`| MongoDB connection string                        | `mongodb://localhost:27017/portfolio`|
+| `NODE_ENV`   | Runtime environment (`development` or `production`) | `development`                     |
+| `CLIENT_URL` | Allowed frontend origin for CORS                 | `http://localhost:3000`              |
+
+Example `.env`:
 
 ```env
 PORT=5000
@@ -55,31 +66,36 @@ NODE_ENV=development
 CLIENT_URL=http://localhost:3000
 ```
 
-### Run
+For production, set `NODE_ENV=production` and point `CLIENT_URL` to your deployed frontend URL (e.g. `https://yourportfolio.com`).
+
+## Run Commands
 
 ```bash
-# Development (with nodemon)
+# Development (verbose logs, auto-reload via nodemon)
 npm run dev
 
 # Production
 npm start
-```
 
-### Seed Database
-
-Populate the database with sample projects and certificates:
-
-```bash
+# Seed database with sample projects and certificates
 npm run seed
 ```
 
-This clears existing project and certificate records and inserts fresh seed data.
+The seed script clears existing project and certificate records and inserts fresh seed data. It does not affect contact submissions.
 
-## API
+## Available Routes
 
-All endpoints are versioned under `/api/v1`.
+| Method | Endpoint                    | Description                    |
+|--------|-----------------------------|--------------------------------|
+| GET    | `/api/v1/health`            | Health and status check        |
+| GET    | `/api/v1/projects`          | List all projects              |
+| GET    | `/api/v1/projects/:slug`    | Get project by slug            |
+| GET    | `/api/v1/certificates`      | List all certificates          |
+| POST   | `/api/v1/contact`           | Submit contact form            |
 
-All successful responses use:
+## API Response Format
+
+### Success (data endpoints)
 
 ```json
 {
@@ -88,7 +104,16 @@ All successful responses use:
 }
 ```
 
-Error responses use:
+### Success (contact submission)
+
+```json
+{
+  "success": true,
+  "message": "Message sent successfully"
+}
+```
+
+### Failure
 
 ```json
 {
@@ -96,6 +121,22 @@ Error responses use:
   "message": "Error description"
 }
 ```
+
+### Validation failure
+
+```json
+{
+  "success": false,
+  "errors": [
+    {
+      "field": "email",
+      "message": "Please provide a valid email"
+    }
+  ]
+}
+```
+
+---
 
 ### Health Check
 
@@ -108,9 +149,14 @@ Response:
 ```json
 {
   "success": true,
-  "message": "Backend running successfully"
+  "environment": "production",
+  "uptime": "3600s",
+  "timestamp": "2024-01-01T00:00:00.000Z",
+  "database": "connected"
 }
 ```
+
+---
 
 ### Projects
 
@@ -179,6 +225,39 @@ Not found:
 }
 ```
 
+---
+
+### Certificates
+
+#### List all certificates
+
+```
+GET /api/v1/certificates
+```
+
+Returns all certificates sorted newest first by issue date.
+
+Response:
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "title": "MongoDB Node.js Developer",
+      "issuer": "MongoDB University",
+      "issueDate": "2024-11-15T00:00:00.000Z",
+      "credentialUrl": "https://credentials.example.com/mongodb-node",
+      "thumbnail": "/images/certificates/mongodb-node.jpg",
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "updatedAt": "2024-01-01T00:00:00.000Z"
+    }
+  ]
+}
+```
+
+---
+
 ### Contact
 
 #### Submit contact form
@@ -233,42 +312,108 @@ Rate limit exceeded (`429`):
 
 Field rules:
 
-| Field   | Rules                                      |
-|---------|--------------------------------------------|
-| `name`  | Required, 2–100 characters, trimmed          |
-| `email` | Required, valid email, stored lowercase      |
-| `message` | Required, 10–2000 characters, trimmed    |
+| Field     | Rules                                   |
+|-----------|-----------------------------------------|
+| `name`    | Required, 2–100 characters, trimmed     |
+| `email`   | Required, valid email, stored lowercase   |
+| `message` | Required, 10–2000 characters, trimmed   |
 
-Incoming data is sanitized to prevent NoSQL injection and malformed payloads. Database and unexpected errors are handled by centralized error middleware.
+---
 
-### Certificates
+## Production Features
 
-#### List all certificates
+### Security
 
+- **Helmet** — Sets secure HTTP headers; CSP disabled for JSON API, cross-origin resource policy enabled for frontend access
+- **CORS** — Only `CLIENT_URL` is allowed; unauthorized origins receive `403`
+- **Rate limiting** — Global limit (100 req / 15 min) plus contact-specific limit (5 req / 15 min)
+- **Input sanitization** — Contact route strips MongoDB operators and nested objects
+- **JSON strict mode** — Rejects malformed or oversized payloads (50 KB limit)
+
+### Performance
+
+- **Compression** — gzip for responses over 1 KB
+- **MongoDB indexes** — `projects` (slug unique, featured + createdAt), `certificates` (issueDate), `contacts` (createdAt)
+
+### Logging
+
+| Environment   | Morgan format | Detail                          |
+|---------------|---------------|---------------------------------|
+| `development` | `dev`         | Verbose, colorized request logs |
+| `production`  | `combined`    | Concise Apache-style access log |
+
+### Database Connection
+
+- Retries up to **5 times** with a **5-second** delay between attempts
+- Server exits safely if all connection attempts fail
+- On `SIGINT` / `SIGTERM`: HTTP server closes, MongoDB connection closes, shutdown status is logged
+
+## Deployment Notes
+
+### General
+
+1. Set all required environment variables on your hosting platform
+2. Set `NODE_ENV=production`
+3. Set `CLIENT_URL` to your deployed frontend URL (include protocol, no trailing slash)
+4. Use a managed MongoDB service (e.g. MongoDB Atlas) and set `MONGODB_URI`
+5. Run `npm run seed` once after first deploy to populate projects and certificates
+6. Start with `npm start`
+
+### Platform Examples
+
+**Render / Railway / Fly.io**
+
+- Build command: `npm install`
+- Start command: `npm start`
+- Add environment variables in the platform dashboard
+- Enable health check path: `/api/v1/health`
+
+**MongoDB Atlas**
+
+- Whitelist your server's IP (or allow `0.0.0.0/0` for cloud platforms with dynamic IPs)
+- Use the Atlas connection string as `MONGODB_URI`
+
+### Pre-Deploy Checklist
+
+- [ ] `PORT`, `MONGODB_URI`, `NODE_ENV`, `CLIENT_URL` are set
+- [ ] `NODE_ENV` is `production`
+- [ ] `CLIENT_URL` matches the live frontend URL exactly
+- [ ] MongoDB is reachable from the deployment environment
+- [ ] `npm run seed` has been run (projects and certificates populated)
+- [ ] `GET /api/v1/health` returns `database: "connected"`
+
+## Final Validation Checklist
+
+Run these after setup or deployment:
+
+```bash
+# 1. Start the server
+npm run dev          # development
+npm start            # production
+
+# 2. Seed the database (first time only)
+npm run seed
+
+# 3. Verify endpoints
+curl http://localhost:5000/api/v1/health
+curl http://localhost:5000/api/v1/projects
+curl http://localhost:5000/api/v1/projects/portfolio-platform
+curl http://localhost:5000/api/v1/certificates
+curl -X POST http://localhost:5000/api/v1/contact \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Jane Doe","email":"jane@example.com","message":"I would like to discuss a project opportunity."}'
 ```
-GET /api/v1/certificates
-```
 
-Returns all certificates sorted newest first by issue date.
-
-Response:
-
-```json
-{
-  "success": true,
-  "data": [
-    {
-      "title": "MongoDB Node.js Developer",
-      "issuer": "MongoDB University",
-      "issueDate": "2024-11-15T00:00:00.000Z",
-      "credentialUrl": "https://credentials.example.com/mongodb-node",
-      "thumbnail": "/images/certificates/mongodb-node.jpg",
-      "createdAt": "2024-01-01T00:00:00.000Z",
-      "updatedAt": "2024-01-01T00:00:00.000Z"
-    }
-  ]
-}
-```
+| Check                              | Expected result                          |
+|------------------------------------|------------------------------------------|
+| `GET /api/v1/health`               | `success: true`, `database: "connected"` |
+| `GET /api/v1/projects`               | `success: true` with `data` array        |
+| `GET /api/v1/projects/:slug`         | `success: true` with project `data`      |
+| `GET /api/v1/certificates`           | `success: true` with `data` array        |
+| `POST /api/v1/contact` (valid)       | `201`, `message: "Message sent successfully"` |
+| `POST /api/v1/contact` (invalid)     | `400` with `errors` array                |
+| Missing env vars on startup          | Process exits with error message         |
+| `SIGINT` / `SIGTERM`                 | Graceful shutdown logged                 |
 
 ## Architecture
 

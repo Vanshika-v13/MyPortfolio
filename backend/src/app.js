@@ -12,16 +12,65 @@ const app = express();
 
 app.set('trust proxy', 1);
 
-app.use(helmet());
+app.disable('x-powered-by');
+
 app.use(
-  cors({
-    origin: process.env.CLIENT_URL,
-    credentials: true,
+  helmet({
+    contentSecurityPolicy: false,
+    crossOriginEmbedderPolicy: false,
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
   })
 );
-app.use(compression());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
+const allowedOrigin = process.env.CLIENT_URL;
+
+app.use(
+  cors({
+    origin(origin, callback) {
+      if (!origin || origin === allowedOrigin) {
+        callback(null, true);
+        return;
+      }
+      callback(null, false);
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type'],
+  })
+);
+
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+
+  if (origin && origin !== allowedOrigin) {
+    return res.status(403).json({
+      success: false,
+      message: 'Origin not allowed',
+    });
+  }
+
+  next();
+});
+
+app.use(
+  compression({
+    threshold: 1024,
+    level: 6,
+  })
+);
+
+app.use(express.json({ limit: '50kb', strict: true }));
+app.use(express.urlencoded({ extended: false, limit: '50kb' }));
+
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+    return res.status(400).json({
+      success: false,
+      message: 'Invalid JSON payload',
+    });
+  }
+  next(err);
+});
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
