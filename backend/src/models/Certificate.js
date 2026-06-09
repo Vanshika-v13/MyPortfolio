@@ -29,6 +29,6 @@ const certificateSchema = new mongoose.Schema(
   }
 );
 
-certificateSchema.index({ issueDate: -1 });
+certificateSchema.index({ issueDate: -1, createdAt: -1 });
 
 module.exports = mongoose.model('Certificate', certificateSchema);

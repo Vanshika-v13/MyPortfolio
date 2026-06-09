@@ -2,6 +2,27 @@
 
 Production-ready REST API for a premium developer portfolio website.
 
+## Project Overview
+
+This backend powers a developer portfolio frontend with versioned JSON endpoints for projects, certificates, and contact submissions. It is built with Express and MongoDB using a clear MVC layout: routes define endpoints, controllers handle request/response logic, models define persistence, and middleware covers cross-cutting concerns (security, validation, rate limiting, and errors).
+
+**Core capabilities**
+
+- Health monitoring with database connection status
+- Read-only portfolio content (projects and certificates) with consistent `{ success, data }` responses
+- Contact form intake with validation, sanitization, and per-IP rate limiting
+- Production hardening: Helmet, CORS, compression, global rate limits, graceful shutdown
+
+**Quality assurance**
+
+Run the automated QA suite after starting the server and seeding the database:
+
+```bash
+npm run qa
+```
+
+The script verifies all routes, error formats, sorting, rate limits, and compression. Exit code `0` means all checks passed.
+
 ## Tech Stack
 
 - Node.js
@@ -21,9 +42,10 @@ backend/
 │   ├── middleware/     # Express middleware
 │   ├── models/         # Mongoose schemas
 │   ├── routes/         # API route definitions
+│   ├── scripts/        # Operational scripts (QA verification)
 │   ├── seed/           # Database seed scripts
 │   │   └── data/       # Seed data for projects and certificates
-│   ├── utils/          # Shared utilities
+│   ├── utils/          # Shared utilities (AppError, asyncHandler)
 │   ├── app.js          # Express application setup
 │   └── server.js       # Server entry point
 ├── .env.example
@@ -79,9 +101,14 @@ npm start
 
 # Seed database with sample projects and certificates
 npm run seed
+
+# Run automated QA verification (server must be running)
+npm run qa
 ```
 
 The seed script clears existing project and certificate records and inserts fresh seed data. It does not affect contact submissions.
+
+`npm run qa` exercises every public endpoint and reports pass/fail for health, projects, certificates, contact validation, rate limiting, error formats, and gzip compression.
 
 ## Available Routes
 
@@ -333,7 +360,8 @@ Field rules:
 ### Performance
 
 - **Compression** — gzip for responses over 1 KB
-- **MongoDB indexes** — `projects` (slug unique, featured + createdAt), `certificates` (issueDate), `contacts` (createdAt)
+- **MongoDB indexes** — `projects` (slug unique, featured + createdAt), `certificates` (issueDate + createdAt), `contacts` (createdAt)
+- **Lean queries** — Read endpoints use `.lean()` for plain objects without Mongoose document overhead
 
 ### Logging
 
@@ -394,7 +422,10 @@ npm start            # production
 # 2. Seed the database (first time only)
 npm run seed
 
-# 3. Verify endpoints
+# 3. Run automated QA (recommended)
+npm run qa
+
+# 4. Or verify endpoints manually
 curl http://localhost:5000/api/v1/health
 curl http://localhost:5000/api/v1/projects
 curl http://localhost:5000/api/v1/projects/portfolio-platform
@@ -406,14 +437,18 @@ curl -X POST http://localhost:5000/api/v1/contact \
 
 | Check                              | Expected result                          |
 |------------------------------------|------------------------------------------|
+| `npm run qa`                       | `14/14 passed`, exit code `0`            |
 | `GET /api/v1/health`               | `success: true`, `database: "connected"` |
-| `GET /api/v1/projects`               | `success: true` with `data` array        |
-| `GET /api/v1/projects/:slug`         | `success: true` with project `data`      |
-| `GET /api/v1/certificates`           | `success: true` with `data` array        |
-| `POST /api/v1/contact` (valid)       | `201`, `message: "Message sent successfully"` |
-| `POST /api/v1/contact` (invalid)     | `400` with `errors` array                |
-| Missing env vars on startup          | Process exits with error message         |
-| `SIGINT` / `SIGTERM`                 | Graceful shutdown logged                 |
+| `GET /api/v1/projects`             | `success: true` with `data` array        |
+| `GET /api/v1/projects/`            | Same as `/projects` (trailing slash)     |
+| `GET /api/v1/projects/:slug`       | `success: true` with project `data`      |
+| `GET /api/v1/certificates`         | `success: true` with `data` array        |
+| `POST /api/v1/contact` (valid)     | `201`, `message: "Message sent successfully"` |
+| `POST /api/v1/contact` (invalid)   | `400` with `errors` array                |
+| Missing env vars on startup        | Process exits with error message         |
+| `SIGINT` / `SIGTERM`               | Graceful shutdown logged                 |
+
+See [BACKEND_READINESS_REPORT.md](./BACKEND_READINESS_REPORT.md) for the full QA summary and deployment readiness assessment.
 
 ## Architecture
 

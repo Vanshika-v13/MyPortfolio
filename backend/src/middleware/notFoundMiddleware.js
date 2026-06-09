@@ -1,7 +1,7 @@
+const AppError = require('../utils/AppError');
+
 const notFoundMiddleware = (req, res, next) => {
-  const error = new Error(`Not Found - ${req.originalUrl}`);
-  error.statusCode = 404;
-  next(error);
+  next(new AppError('Route not found', 404));
 };
 
 module.exports = notFoundMiddleware;

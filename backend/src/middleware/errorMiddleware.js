@@ -1,3 +1,5 @@
+const AppError = require('../utils/AppError');
+
 const errorMiddleware = (err, req, res, next) => {
   if (err.name === 'ValidationError' && err.errors) {
     const errors = Object.values(err.errors).map((e) => ({
@@ -20,6 +22,7 @@ const errorMiddleware = (err, req, res, next) => {
 
   const statusCode = err.statusCode || 500;
   const message = err.message || 'Internal Server Error';
+  const isOperational = err instanceof AppError || statusCode < 500;
 
   if (err.errors) {
     return res.status(statusCode).json({
@@ -28,14 +31,15 @@ const errorMiddleware = (err, req, res, next) => {
     });
   }
 
-  if (process.env.NODE_ENV === 'development') {
+  if (!isOperational && process.env.NODE_ENV === 'development') {
     console.error(err);
   }
 
   res.status(statusCode).json({
     success: false,
     message,
-    ...(process.env.NODE_ENV === 'development' && { stack: err.stack }),
+    ...(!isOperational &&
+      process.env.NODE_ENV === 'development' && { stack: err.stack }),
   });
 };
 
