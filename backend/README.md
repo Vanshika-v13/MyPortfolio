@@ -1,66 +1,37 @@
 # Portfolio Backend
 
-Production-ready REST API for a premium developer portfolio website.
+Production-ready REST API for a developer portfolio website.
 
 ## Project Overview
 
-This backend powers a developer portfolio frontend with versioned JSON endpoints for projects, certificates, and contact submissions. It is built with Express and MongoDB using a clear MVC layout: routes define endpoints, controllers handle request/response logic, models define persistence, and middleware covers cross-cutting concerns (security, validation, rate limiting, and errors).
+Node.js + Express + MongoDB API that serves portfolio content (projects, certificates) and accepts contact form submissions. Built with MVC architecture: routes map endpoints, controllers handle logic, models define persistence, middleware covers security, validation, and errors.
 
-**Core capabilities**
+**Intentionally excluded:** authentication, admin panels, email delivery, background jobs, WebSockets, file uploads, and analytics.
 
-- Health monitoring with database connection status
-- Read-only portfolio content (projects and certificates) with consistent `{ success, data }` responses
-- Contact form intake with validation, sanitization, and per-IP rate limiting
-- Production hardening: Helmet, CORS, compression, global rate limits, graceful shutdown
-
-**Quality assurance**
-
-Run the automated QA suite after starting the server and seeding the database:
-
-```bash
-npm run qa
-```
-
-The script verifies all routes, error formats, sorting, rate limits, and compression. Exit code `0` means all checks passed.
-
-## Tech Stack
-
-- Node.js
-- Express.js
-- MongoDB + Mongoose
-- express-validator
-- helmet, cors, express-rate-limit
-- dotenv, morgan, compression
-
-## Project Structure
+## Folder Structure
 
 ```
 backend/
 ├── src/
-│   ├── config/         # Database and app configuration
+│   ├── config/         # Database connection
 │   ├── controllers/    # Request handlers
-│   ├── middleware/     # Express middleware
+│   ├── middleware/     # Security, validation, rate limits, errors
 │   ├── models/         # Mongoose schemas
 │   ├── routes/         # API route definitions
-│   ├── scripts/        # Operational scripts (QA verification)
+│   ├── scripts/        # QA verification script
 │   ├── seed/           # Database seed scripts
-│   │   └── data/       # Seed data for projects and certificates
-│   ├── utils/          # Shared utilities (AppError, asyncHandler)
-│   ├── app.js          # Express application setup
-│   └── server.js       # Server entry point
+│   │   └── data/       # Seed data files
+│   ├── utils/          # AppError, asyncHandler
+│   ├── app.js          # Express app setup
+│   └── server.js       # Entry point, env validation, graceful shutdown
 ├── .env.example
 ├── package.json
 └── README.md
 ```
 
-## Installation
+## Installation Steps
 
-### Prerequisites
-
-- Node.js 18+
-- MongoDB (local or Atlas)
-
-### Setup
+**Prerequisites:** Node.js 18+, MongoDB (local or Atlas)
 
 ```bash
 cd backend
@@ -68,18 +39,18 @@ npm install
 cp .env.example .env
 ```
 
-### Environment Variables
+Edit `.env` with your values before starting the server.
 
-All four variables are **required**. The server will not start if any are missing or invalid.
+## Environment Variable Setup
 
-| Variable     | Description                                      | Example                              |
-|--------------|--------------------------------------------------|--------------------------------------|
-| `PORT`       | HTTP port (positive integer)                     | `5000`                               |
-| `MONGODB_URI`| MongoDB connection string                        | `mongodb://localhost:27017/portfolio`|
-| `NODE_ENV`   | Runtime environment (`development` or `production`) | `development`                     |
-| `CLIENT_URL` | Allowed frontend origin for CORS                 | `http://localhost:3000`              |
+All four variables are **required**. The server exits on startup if any are missing, empty, or invalid.
 
-Example `.env`:
+| Variable      | Description                         | Example                               |
+|---------------|-------------------------------------|---------------------------------------|
+| `PORT`        | HTTP port (positive integer)        | `5000`                                |
+| `MONGODB_URI` | MongoDB connection string           | `mongodb://localhost:27017/portfolio` |
+| `NODE_ENV`    | `development` or `production`       | `development`                         |
+| `CLIENT_URL`  | Allowed frontend origin for CORS    | `http://localhost:3000`               |
 
 ```env
 PORT=5000
@@ -88,90 +59,66 @@ NODE_ENV=development
 CLIENT_URL=http://localhost:3000
 ```
 
-For production, set `NODE_ENV=production` and point `CLIENT_URL` to your deployed frontend URL (e.g. `https://yourportfolio.com`).
+For production: set `NODE_ENV=production` and `CLIENT_URL` to your live frontend URL (include protocol, no trailing slash).
 
-## Run Commands
+## Available Scripts
+
+| Script        | Command         | Description                              |
+|---------------|-----------------|------------------------------------------|
+| Start         | `npm start`     | Run server in production mode            |
+| Development   | `npm run dev`   | Run with nodemon (auto-reload)           |
+| Seed          | `npm run seed`  | Populate projects and certificates       |
+| QA            | `npm run qa`    | Verify all endpoints (server must be running) |
+
+## Run Instructions
 
 ```bash
-# Development (verbose logs, auto-reload via nodemon)
+# Development
 npm run dev
 
 # Production
 npm start
+```
 
-# Seed database with sample projects and certificates
+On successful startup, the server logs port, environment, MongoDB status, and timestamp.
+
+## Seed Instructions
+
+```bash
 npm run seed
-
-# Run automated QA verification (server must be running)
-npm run qa
 ```
 
-The seed script clears existing project and certificate records and inserts fresh seed data. It does not affect contact submissions.
+- Requires `MONGODB_URI` in `.env`
+- Clears existing projects and certificates, then inserts seed data
+- Does **not** delete contact submissions
+- Project slugs are unique — re-running seed replaces content safely via `deleteMany` before insert
+- Exits with code `0` on success, `1` on failure
 
-`npm run qa` exercises every public endpoint and reports pass/fail for health, projects, certificates, contact validation, rate limiting, error formats, and gzip compression.
+Run once after first deployment to populate content.
 
-## Available Routes
+## API Routes
 
-| Method | Endpoint                    | Description                    |
-|--------|-----------------------------|--------------------------------|
-| GET    | `/api/v1/health`            | Health and status check        |
-| GET    | `/api/v1/projects`          | List all projects              |
-| GET    | `/api/v1/projects/:slug`    | Get project by slug            |
-| GET    | `/api/v1/certificates`      | List all certificates          |
-| POST   | `/api/v1/contact`           | Submit contact form            |
+| Method | Endpoint                 | Description           |
+|--------|--------------------------|-----------------------|
+| GET    | `/api/v1/health`         | Health and DB status  |
+| GET    | `/api/v1/projects`       | List all projects     |
+| GET    | `/api/v1/projects/:slug` | Get project by slug   |
+| GET    | `/api/v1/certificates`   | List all certificates |
+| POST   | `/api/v1/contact`        | Submit contact form   |
 
-## API Response Format
+### Response formats
 
-### Success (data endpoints)
+**Success (data):** `{ "success": true, "data": [...] }`
 
-```json
-{
-  "success": true,
-  "data": "..."
-}
-```
+**Success (contact):** `{ "success": true, "message": "Message sent successfully" }`
 
-### Success (contact submission)
+**Failure:** `{ "success": false, "message": "..." }`
 
-```json
-{
-  "success": true,
-  "message": "Message sent successfully"
-}
-```
+**Validation:** `{ "success": false, "errors": [{ "field": "...", "message": "..." }] }`
 
-### Failure
+### Health check
 
-```json
-{
-  "success": false,
-  "message": "Error description"
-}
-```
-
-### Validation failure
-
-```json
-{
-  "success": false,
-  "errors": [
-    {
-      "field": "email",
-      "message": "Please provide a valid email"
-    }
-  ]
-}
-```
-
----
-
-### Health Check
-
-```
-GET /api/v1/health
-```
-
-Response:
+`GET /api/v1/health` returns:
 
 ```json
 {
@@ -183,283 +130,100 @@ Response:
 }
 ```
 
----
+### Contact field rules
 
-### Projects
+| Field     | Rules                              |
+|-----------|------------------------------------|
+| `name`    | Required, 2–100 characters         |
+| `email`   | Required, valid email              |
+| `message` | Required, 10–2000 characters       |
 
-#### List all projects
+Rate limited to 5 requests per IP every 15 minutes.
 
-```
-GET /api/v1/projects
-```
+## Deployment Steps for Render
 
-Returns all projects sorted with featured projects first, then newest first.
+1. Create a new **Web Service** and connect your repository
+2. Set **Root Directory** to `backend` (if monorepo)
+3. **Build command:** `npm install`
+4. **Start command:** `npm start`
+5. Add environment variables: `PORT` (Render sets this automatically), `MONGODB_URI`, `NODE_ENV=production`, `CLIENT_URL`
+6. Set **Health Check Path** to `/api/v1/health`
+7. Deploy, then run `npm run seed` once via Render Shell
+8. Verify `GET /api/v1/health` returns `database: "connected"`
 
-Response:
+## Deployment Steps for Railway
 
-```json
-{
-  "success": true,
-  "data": [
-    {
-      "title": "Portfolio Platform",
-      "slug": "portfolio-platform",
-      "shortDescription": "...",
-      "fullDescription": "...",
-      "thumbnail": "/images/projects/portfolio-platform-thumb.jpg",
-      "techStack": ["React", "Node.js"],
-      "githubUrl": "https://github.com/example/portfolio-platform",
-      "liveDemoUrl": "https://portfolio.example.com",
-      "features": ["..."],
-      "architecture": "...",
-      "challenges": ["..."],
-      "learnings": ["..."],
-      "galleryImages": ["..."],
-      "featured": true,
-      "createdAt": "2024-01-01T00:00:00.000Z",
-      "updatedAt": "2024-01-01T00:00:00.000Z"
-    }
-  ]
-}
-```
+1. Create a new project and deploy from your repository
+2. Set **Root Directory** to `backend` (if monorepo)
+3. Railway auto-detects Node.js — confirm **Start Command** is `npm start`
+4. Add variables: `MONGODB_URI`, `NODE_ENV=production`, `CLIENT_URL` (Railway sets `PORT` automatically)
+5. Deploy, then run `npm run seed` via Railway CLI or one-off command
+6. Verify health endpoint responds with `success: true`
 
-#### Get project by slug
+## Troubleshooting Guide
 
-```
-GET /api/v1/projects/:slug
-```
+| Problem | Solution |
+|---------|----------|
+| `Missing required environment variables` on startup | Set all four vars in `.env` or platform dashboard |
+| `PORT must be a positive integer` | Ensure `PORT` is a valid number |
+| `NODE_ENV must be one of: development, production` | Set `NODE_ENV` exactly to one of these values |
+| MongoDB connection fails | Check `MONGODB_URI`, Atlas IP whitelist, and network access |
+| CORS / `Origin not allowed` | `CLIENT_URL` must match frontend URL exactly (protocol, no trailing slash) |
+| `database: "disconnected"` on health check | MongoDB unreachable — check connection string and credentials |
+| Seed fails with duplicate key | Re-run `npm run seed` — it clears collections first; if error persists, check MongoDB permissions |
+| Contact returns `429` | Rate limit exceeded — wait 15 minutes or test from a different IP |
+| Port already in use locally | Stop the other process or change `PORT` in `.env` |
 
-Returns a single project matching the slug. Responds with `404` if not found.
+## Production Notes
 
-Response:
+### Security (active by default)
 
-```json
-{
-  "success": true,
-  "data": {
-    "title": "Portfolio Platform",
-    "slug": "portfolio-platform"
-  }
-}
-```
-
-Not found:
-
-```json
-{
-  "success": false,
-  "message": "Project not found"
-}
-```
-
----
-
-### Certificates
-
-#### List all certificates
-
-```
-GET /api/v1/certificates
-```
-
-Returns all certificates sorted newest first by issue date.
-
-Response:
-
-```json
-{
-  "success": true,
-  "data": [
-    {
-      "title": "MongoDB Node.js Developer",
-      "issuer": "MongoDB University",
-      "issueDate": "2024-11-15T00:00:00.000Z",
-      "credentialUrl": "https://credentials.example.com/mongodb-node",
-      "thumbnail": "/images/certificates/mongodb-node.jpg",
-      "createdAt": "2024-01-01T00:00:00.000Z",
-      "updatedAt": "2024-01-01T00:00:00.000Z"
-    }
-  ]
-}
-```
-
----
-
-### Contact
-
-#### Submit contact form
-
-```
-POST /api/v1/contact
-```
-
-Accepts public contact form submissions. Rate limited to **5 requests per IP** every **15 minutes**.
-
-Request body:
-
-```json
-{
-  "name": "Jane Doe",
-  "email": "jane@example.com",
-  "message": "I would like to discuss a project opportunity."
-}
-```
-
-Success response (`201`):
-
-```json
-{
-  "success": true,
-  "message": "Message sent successfully"
-}
-```
-
-Validation error (`400`):
-
-```json
-{
-  "success": false,
-  "errors": [
-    {
-      "field": "email",
-      "message": "Please provide a valid email"
-    }
-  ]
-}
-```
-
-Rate limit exceeded (`429`):
-
-```json
-{
-  "success": false,
-  "message": "Too many contact requests. Please try again later."
-}
-```
-
-Field rules:
-
-| Field     | Rules                                   |
-|-----------|-----------------------------------------|
-| `name`    | Required, 2–100 characters, trimmed     |
-| `email`   | Required, valid email, stored lowercase   |
-| `message` | Required, 10–2000 characters, trimmed   |
-
----
-
-## Production Features
-
-### Security
-
-- **Helmet** — Sets secure HTTP headers; CSP disabled for JSON API, cross-origin resource policy enabled for frontend access
-- **CORS** — Only `CLIENT_URL` is allowed; unauthorized origins receive `403`
-- **Rate limiting** — Global limit (100 req / 15 min) plus contact-specific limit (5 req / 15 min)
-- **Input sanitization** — Contact route strips MongoDB operators and nested objects
-- **JSON strict mode** — Rejects malformed or oversized payloads (50 KB limit)
-
-### Performance
-
+- **Helmet** — secure HTTP headers
+- **CORS** — restricted to `CLIENT_URL`
 - **Compression** — gzip for responses over 1 KB
-- **MongoDB indexes** — `projects` (slug unique, featured + createdAt), `certificates` (issueDate + createdAt), `contacts` (createdAt)
-- **Lean queries** — Read endpoints use `.lean()` for plain objects without Mongoose document overhead
+- **Rate limiting** — global (100 req / 15 min) and contact-specific (5 req / 15 min)
+- **Input sanitization** — contact route strips operator keys and nested objects
+- **JSON limit** — 50 KB max payload, strict parsing
 
-### Logging
+### Operations
 
-| Environment   | Morgan format | Detail                          |
-|---------------|---------------|---------------------------------|
-| `development` | `dev`         | Verbose, colorized request logs |
-| `production`  | `combined`    | Concise Apache-style access log |
+- MongoDB connects with up to 5 retries (5 s apart)
+- Graceful shutdown on `SIGINT` / `SIGTERM` — stops HTTP server, closes DB connection
+- Morgan logging: `dev` format in development, `combined` in production
+- `trust proxy` enabled for correct client IP behind load balancers (Render, Railway)
 
-### Database Connection
-
-- Retries up to **5 times** with a **5-second** delay between attempts
-- Server exits safely if all connection attempts fail
-- On `SIGINT` / `SIGTERM`: HTTP server closes, MongoDB connection closes, shutdown status is logged
-
-## Deployment Notes
-
-### General
-
-1. Set all required environment variables on your hosting platform
-2. Set `NODE_ENV=production`
-3. Set `CLIENT_URL` to your deployed frontend URL (include protocol, no trailing slash)
-4. Use a managed MongoDB service (e.g. MongoDB Atlas) and set `MONGODB_URI`
-5. Run `npm run seed` once after first deploy to populate projects and certificates
-6. Start with `npm start`
-
-### Platform Examples
-
-**Render / Railway / Fly.io**
-
-- Build command: `npm install`
-- Start command: `npm start`
-- Add environment variables in the platform dashboard
-- Enable health check path: `/api/v1/health`
-
-**MongoDB Atlas**
-
-- Whitelist your server's IP (or allow `0.0.0.0/0` for cloud platforms with dynamic IPs)
-- Use the Atlas connection string as `MONGODB_URI`
-
-### Pre-Deploy Checklist
-
-- [ ] `PORT`, `MONGODB_URI`, `NODE_ENV`, `CLIENT_URL` are set
-- [ ] `NODE_ENV` is `production`
-- [ ] `CLIENT_URL` matches the live frontend URL exactly
-- [ ] MongoDB is reachable from the deployment environment
-- [ ] `npm run seed` has been run (projects and certificates populated)
-- [ ] `GET /api/v1/health` returns `database: "connected"`
-
-## Final Validation Checklist
-
-Run these after setup or deployment:
+### VPS deployment
 
 ```bash
-# 1. Start the server
-npm run dev          # development
-npm start            # production
-
-# 2. Seed the database (first time only)
-npm run seed
-
-# 3. Run automated QA (recommended)
-npm run qa
-
-# 4. Or verify endpoints manually
-curl http://localhost:5000/api/v1/health
-curl http://localhost:5000/api/v1/projects
-curl http://localhost:5000/api/v1/projects/portfolio-platform
-curl http://localhost:5000/api/v1/certificates
-curl -X POST http://localhost:5000/api/v1/contact \
-  -H "Content-Type: application/json" \
-  -d '{"name":"Jane Doe","email":"jane@example.com","message":"I would like to discuss a project opportunity."}'
+npm install
+cp .env.example .env   # configure for production
+npm run seed             # first time only
+npm start                # or use pm2/systemd for process management
 ```
 
-| Check                              | Expected result                          |
-|------------------------------------|------------------------------------------|
-| `npm run qa`                       | `14/14 passed`, exit code `0`            |
-| `GET /api/v1/health`               | `success: true`, `database: "connected"` |
-| `GET /api/v1/projects`             | `success: true` with `data` array        |
-| `GET /api/v1/projects/`            | Same as `/projects` (trailing slash)     |
-| `GET /api/v1/projects/:slug`       | `success: true` with project `data`      |
-| `GET /api/v1/certificates`         | `success: true` with `data` array        |
-| `POST /api/v1/contact` (valid)     | `201`, `message: "Message sent successfully"` |
-| `POST /api/v1/contact` (invalid)   | `400` with `errors` array                |
-| Missing env vars on startup        | Process exits with error message         |
-| `SIGINT` / `SIGTERM`               | Graceful shutdown logged                 |
+Use a reverse proxy (nginx) for HTTPS. Set health checks on `/api/v1/health`.
 
-See [BACKEND_READINESS_REPORT.md](./BACKEND_READINESS_REPORT.md) for the full QA summary and deployment readiness assessment.
+### Vercel Serverless (not supported as-is)
 
-## Architecture
+This backend is a long-running Node.js process with persistent MongoDB connections. Deploying to Vercel Serverless would require:
 
-This project follows MVC:
+- Refactoring to serverless function handlers (no `server.listen`)
+- Connection pooling or serverless-compatible MongoDB driver patterns
+- Removing in-memory rate limit state (use external store)
+- Adapting graceful shutdown (not applicable in serverless)
 
-- **Models** — Mongoose schemas and data layer
-- **Views** — JSON API responses (no server-rendered views)
-- **Controllers** — Business logic and response formatting
-- **Routes** — Endpoint mapping and middleware chains
+Use Render, Railway, or a VPS instead.
 
-Async controllers use `asyncHandler` to forward errors to centralized `errorMiddleware`. Custom `AppError` instances provide consistent status codes and messages for missing resources.
+### Pre-deploy checklist
+
+- [ ] All environment variables set
+- [ ] `NODE_ENV=production`
+- [ ] `CLIENT_URL` matches live frontend
+- [ ] MongoDB reachable from host
+- [ ] `npm run seed` completed
+- [ ] Health check returns `database: "connected"`
+
+See [BACKEND_READINESS_REPORT.md](./BACKEND_READINESS_REPORT.md) for the full deployment readiness assessment.
 
 ## License
 

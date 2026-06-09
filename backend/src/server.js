@@ -8,12 +8,14 @@ const connectDB = require('./config/db');
 const requiredEnvVars = ['PORT', 'MONGODB_URI', 'NODE_ENV', 'CLIENT_URL'];
 const validEnvironments = ['development', 'production'];
 
-const missingEnvVars = requiredEnvVars.filter((key) => !process.env[key]);
+const missingEnvVars = requiredEnvVars.filter(
+  (key) => !process.env[key] || !String(process.env[key]).trim()
+);
 
 if (missingEnvVars.length > 0) {
-  console.error(
-    `Missing required environment variables: ${missingEnvVars.join(', ')}`
-  );
+  console.error('Startup aborted: missing required environment variables.');
+  console.error(`Missing: ${missingEnvVars.join(', ')}`);
+  console.error('Set all variables in .env or your hosting platform dashboard.');
   process.exit(1);
 }
 
@@ -40,7 +42,7 @@ const closeDatabase = async () => {
   }
 
   await mongoose.connection.close();
-  console.log('MongoDB connection closed');
+  console.log('[shutdown] MongoDB connection closed');
 };
 
 const gracefulShutdown = (signal) => {
@@ -49,7 +51,7 @@ const gracefulShutdown = (signal) => {
   }
 
   isShuttingDown = true;
-  console.log(`\n${signal} received. Initiating graceful shutdown...`);
+  console.log(`\n[shutdown] ${signal} received — stopping new HTTP requests`);
 
   const forceExitTimer = setTimeout(() => {
     console.error('Forced shutdown after timeout');
@@ -61,7 +63,7 @@ const gracefulShutdown = (signal) => {
 
     try {
       await closeDatabase();
-      console.log('Graceful shutdown complete');
+      console.log('[shutdown] Graceful shutdown complete');
       process.exit(exitCode);
     } catch (error) {
       console.error('Error during shutdown:', error.message);
@@ -70,13 +72,13 @@ const gracefulShutdown = (signal) => {
   };
 
   if (!server) {
-    console.log('HTTP server was not running');
+    console.log('[shutdown] HTTP server was not running');
     finishShutdown(0);
     return;
   }
 
   server.close(() => {
-    console.log('HTTP server closed');
+    console.log('[shutdown] HTTP server closed — no longer accepting connections');
     finishShutdown(0);
   });
 };
@@ -91,9 +93,20 @@ const startServer = async () => {
       server.once('error', reject);
       server.listen(port, () => {
         server.removeListener('error', reject);
-        console.log(
-          `Server running in ${process.env.NODE_ENV} mode on port ${port}`
-        );
+        const mongoStatus =
+          mongoose.connection.readyState === 1 ? 'connected' : 'disconnected';
+        const mongoHost =
+          mongoose.connection.readyState === 1
+            ? mongoose.connection.host
+            : 'n/a';
+
+        console.log('--------------------------------------------------');
+        console.log('Portfolio Backend API — started successfully');
+        console.log(`Port:        ${port}`);
+        console.log(`Environment: ${process.env.NODE_ENV}`);
+        console.log(`MongoDB:     ${mongoStatus} (${mongoHost})`);
+        console.log(`Timestamp:   ${new Date().toISOString()}`);
+        console.log('--------------------------------------------------');
         resolve();
       });
     });
