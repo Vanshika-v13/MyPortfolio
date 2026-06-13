@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, ArrowUpRight } from 'lucide-react';
+import { Mail, ChevronUp } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
 const quickLinks = [
@@ -10,56 +10,234 @@ const quickLinks = [
 ];
 
 const socialLinks = [
-  { icon: FaGithub, label: 'GitHub', href: 'https://github.com/vanshikaverma' },
-  { icon: FaLinkedin, label: 'LinkedIn', href: 'https://linkedin.com/in/vanshikaverma' },
-  { icon: Mail, label: 'Email', href: 'mailto:hello@vanshikaverma.com' }
+  { icon: FaGithub,   label: 'GitHub',   href: 'https://github.com/Vanshika-v13' },
+  { icon: FaLinkedin, label: 'LinkedIn',  href: 'https://www.linkedin.com/in/vanshika13/' },
+  { icon: Mail,       label: 'Email',     href: 'mailto:vanshikaverma1310@gmail.com' }
 ];
 
+const footerStyles = `
+  /* ── Reset all link decorations inside the footer ── */
+  .vv-footer a,
+  .vv-footer a:hover,
+  .vv-footer a:focus,
+  .vv-footer a:active,
+  .vv-footer a:visited {
+    text-decoration: none;
+    outline: none;
+  }
+
+  /* ── Social icon buttons ── */
+  .vv-social-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(0, 229, 255, 0.12);
+    color: #A9B4C7;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    flex-shrink: 0;
+    cursor: pointer;
+    text-decoration: none !important;
+  }
+  .vv-social-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(0, 229, 255, 0.25);
+    color: #E6F1FF;
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.08);
+    text-decoration: none !important;
+  }
+  .vv-social-btn svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+  }
+
+  /* ── Navigation links ── */
+  .vv-nav-link {
+    font-size: 15px;
+    color: #A9B4C7;
+    transition: color 0.2s ease;
+    text-decoration: none !important;
+  }
+  .vv-nav-link:hover {
+    color: #E6F1FF;
+    text-decoration: none !important;
+  }
+
+  /* ── Connect email link ── */
+  .vv-email-link {
+    font-size: 15px;
+    font-weight: 500;
+    color: #E6F1FF;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s ease;
+    text-decoration: none !important;
+    margin-bottom: 6px;
+  }
+  .vv-email-link:hover {
+    color: #00E5FF;
+    text-decoration: none !important;
+  }
+  .vv-email-link:hover .vv-arrow {
+    opacity: 1;
+    transform: translate(2px, -2px);
+  }
+  .vv-arrow {
+    opacity: 0.45;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  /* ── Micro-signature ── */
+  .vv-signature {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: default;
+  }
+  .vv-sig-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(0, 229, 255, 0.8);
+    box-shadow: 0 0 6px rgba(0, 229, 255, 0.15);
+    flex-shrink: 0;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+  }
+  .vv-signature:hover .vv-sig-dot {
+    background: rgba(0, 229, 255, 1);
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.30);
+  }
+  .vv-sig-line1 {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: #A9B4C7;
+    line-height: 1.3;
+    transition: color 0.2s ease;
+  }
+  .vv-sig-line2 {
+    font-size: 12px;
+    font-weight: 400;
+    color: #6B7A90;
+    line-height: 1.3;
+    transition: color 0.2s ease;
+  }
+  .vv-signature:hover .vv-sig-line1 {
+    color: #E6F1FF;
+  }
+  .vv-signature:hover .vv-sig-line2 {
+    color: #A9B4C7;
+  }
+
+  /* ── Scroll-to-top button ── */
+  .vv-scroll-top {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(0, 229, 255, 0.12);
+    color: #A9B4C7;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  }
+  .vv-scroll-top:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(0, 229, 255, 0.25);
+    color: #E6F1FF;
+  }
+
+  /* ── Section heading labels ── */
+  .vv-section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #6B7A90;
+    margin-bottom: 20px;
+  }
+
+  /* ── Connect section label (brighter) ── */
+  .vv-connect-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #E6F1FF;
+    margin: 0;
+  }
+
+  /* ── Connect email link ── */
+  .vv-connect-email {
+    font-size: 15px;
+    font-weight: 500;
+    color: #E6F1FF;
+    text-decoration: none !important;
+    transition: color 0.2s ease;
+    display: inline-block;
+  }
+  .vv-connect-email:hover {
+    color: #00E5FF;
+    text-decoration: none !important;
+  }
+`;
+
 export default function Footer() {
-  const currentYear = new Date().getFullYear(); // Using dynamic year but could be hardcoded to 2026 based on requirements. Let's hardcode 2026 as per reqs: "© 2026 Vanshika Verma. All rights reserved."
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
-    <footer className="w-full bg-[var(--color-surface)] border-t border-[var(--color-surface-elevated)] pt-16 pb-8">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        
+    <footer className="vv-footer w-full pt-16 pb-8" style={{ background: '#050B14', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
+      <style>{footerStyles}</style>
+
+      {/* Subtle ambient glows */}
+      <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden', zIndex: 0 }}>
+        <div style={{ position: 'absolute', left: '-10%', bottom: 0, width: '40%', height: '60%', background: 'radial-gradient(ellipse at left bottom, rgba(30,77,255,0.06) 0%, transparent 70%)', borderRadius: '50%' }} />
+        <div style={{ position: 'absolute', right: '-5%', bottom: 0, width: '30%', height: '50%', background: 'radial-gradient(ellipse at right bottom, rgba(0,229,255,0.04) 0%, transparent 70%)', borderRadius: '50%' }} />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 lg:px-8" style={{ position: 'relative', zIndex: 1 }}>
+
+        {/* ── Three-column upper grid ── */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-8 mb-16">
-          
+
           {/* Brand & Bio */}
           <div className="md:col-span-5 lg:col-span-4 flex flex-col">
-            <h2 className="text-2xl font-bold tracking-tight text-[var(--color-text-primary)] mb-4">
+            <h2 style={{ fontSize: '22px', fontWeight: 700, letterSpacing: '-0.02em', color: '#E6F1FF', marginBottom: '12px' }}>
               Vanshika Verma
             </h2>
-            <p className="text-base text-[var(--color-text-secondary)] leading-relaxed mb-6">
+            <p style={{ fontSize: '14px', color: '#A9B4C7', lineHeight: '1.65', marginBottom: '24px', maxWidth: '300px' }}>
               Full Stack Developer focused on backend engineering and scalable systems.
             </p>
-            <div className="flex items-center gap-4">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               {socialLinks.map((link, idx) => (
-                <a 
+                <a
                   key={idx}
                   href={link.href}
                   target={link.href.startsWith('http') ? '_blank' : '_self'}
                   rel="noopener noreferrer"
                   aria-label={link.label}
-                  className="p-2.5 rounded-full bg-[var(--color-bg)] border border-[var(--color-surface-elevated)] text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] hover:border-[var(--color-accent)]/30 transition-all focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:ring-offset-2 focus:ring-offset-[var(--color-surface)]"
+                  className="vv-social-btn"
                 >
-                  <link.icon className="w-5 h-5" />
+                  <link.icon />
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Navigation */}
           <div className="md:col-span-3 lg:col-span-2 lg:col-start-7">
-            <h3 className="text-sm font-semibold tracking-wider uppercase text-[var(--color-text-primary)] mb-6">
-              Navigation
-            </h3>
-            <ul className="space-y-4">
+            <p className="vv-section-label">Navigation</p>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '14px' }}>
               {quickLinks.map((link, idx) => (
                 <li key={idx}>
-                  <a 
-                    href={link.href}
-                    className="text-base text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors inline-flex items-center group focus:outline-none focus:underline"
-                  >
+                  <a href={link.href} className="vv-nav-link">
                     {link.label}
                   </a>
                 </li>
@@ -69,31 +247,60 @@ export default function Footer() {
 
           {/* Connect */}
           <div className="md:col-span-4 lg:col-span-3 lg:col-start-10 flex flex-col">
-            <h3 className="text-sm font-semibold tracking-wider uppercase text-[var(--color-text-primary)] mb-6">
-              Connect
-            </h3>
-            <a 
-              href="mailto:hello@vanshikaverma.com"
-              className="text-base font-medium text-[var(--color-text-primary)] hover:text-[var(--color-accent)] transition-colors inline-flex items-center gap-2 group mb-2 focus:outline-none focus:underline"
+            <p className="vv-connect-label">Connect</p>
+
+            <p style={{ fontSize: '15px', fontWeight: 500, color: '#E6F1FF', marginTop: '20px', marginBottom: '16px', lineHeight: 1.4 }}>
+              Let's build something impactful.
+            </p>
+
+            <a
+              href="mailto:vanshikaverma1310@gmail.com"
+              className="vv-connect-email"
+              style={{ marginBottom: '10px' }}
             >
-              hello@vanshikaverma.com
-              <ArrowUpRight className="w-4 h-4 opacity-50 group-hover:opacity-100 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all" />
+              vanshikaverma1310@gmail.com
             </a>
-            <p className="text-sm text-[var(--color-text-secondary)]">
-              Available for new opportunities.
+
+            <p style={{ fontSize: '13px', color: '#6B7A90' }}>
+              Greater Noida, India
             </p>
           </div>
 
         </div>
 
-        {/* Copyright */}
-        <div className="pt-8 border-t border-[var(--color-surface-elevated)] flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-[var(--color-text-secondary)]">
+        {/* ── Gradient divider ── */}
+        <div style={{
+          height: '1px',
+          background: 'linear-gradient(90deg, transparent, rgba(0,229,255,0.10), transparent)',
+          marginBottom: '28px'
+        }} />
+
+        {/* ── Bottom bar: copyright / scroll-top / micro-signature ── */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+
+          {/* Left — copyright */}
+          <p style={{ fontSize: '13px', color: '#6B7A90', lineHeight: 1 }}>
             © 2026 Vanshika Verma. All rights reserved.
           </p>
-          <div className="flex items-center gap-6 text-sm text-[var(--color-text-secondary)]">
-            <span className="opacity-50">Crafted with intention.</span>
+
+          {/* Center — scroll to top */}
+          <button
+            onClick={scrollToTop}
+            className="vv-scroll-top"
+            aria-label="Scroll to top"
+          >
+            <ChevronUp style={{ width: '16px', height: '16px' }} />
+          </button>
+
+          {/* Right — micro-signature */}
+          <div className="vv-signature">
+            <span className="vv-sig-dot" />
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+              <span className="vv-sig-line1">Built with React</span>
+              <span className="vv-sig-line2">Crafted with intent.</span>
+            </div>
           </div>
+
         </div>
 
       </div>

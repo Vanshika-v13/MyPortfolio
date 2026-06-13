@@ -2,22 +2,51 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 // External Icons (SimpleIcons via react-icons)
-import { FaJava, FaGithub, FaCode } from 'react-icons/fa';
+import { FaJava, FaGithub, FaCss3Alt } from 'react-icons/fa';
 import { 
-  SiJavascript, SiPython, SiCplusplus,
-  SiReact, SiVite, SiTailwindcss, SiFramer, SiReactrouter,
-  SiNodedotjs, SiExpress, SiJsonwebtokens,
-  SiMongodb, SiMysql,
-  SiGit, SiPostman, SiRender, SiVercel
+  SiJavascript, SiPython, SiCplusplus, SiC,
+  SiHtml5, SiReact, SiNextdotjs, SiTailwindcss, SiBootstrap, SiRedux,
+  SiMongodb, SiMysql, SiNodedotjs,
+  SiGit, SiPostman, SiRender, SiDocker
 } from 'react-icons/si';
 
 // Conceptual Icons (Lucide)
-import { 
-  Network, Blocks, Database, Cpu, Globe, ServerCog
-} from 'lucide-react';
+import { Code2, Globe, Database, Wrench, ServerCog, Braces } from 'lucide-react';
 
 import ExpertiseCard from '../expertise/ExpertiseCard';
 import TechItem from '../expertise/TechItem';
+
+const Background = () => (
+  <motion.div 
+    initial={{ opacity: 0 }}
+    whileInView={{ opacity: 1 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.9, ease: "easeOut" }}
+    className="absolute inset-0 pointer-events-none z-0 overflow-hidden bg-[#050B14]"
+  >
+    {/* Secondary Depth Layer */}
+    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#071425_0%,transparent_100%)] opacity-80" />
+
+    {/* Left Ambient Glow */}
+    <div className="absolute top-[-20%] left-[-20%] w-[80vw] h-[80vw] max-w-[1200px] max-h-[1200px] bg-[#1E4DFF] rounded-full blur-[300px] opacity-[0.09] mix-blend-screen" />
+    
+    {/* Right Ambient Glow */}
+    <div className="absolute bottom-[-20%] right-[-20%] w-[80vw] h-[80vw] max-w-[1200px] max-h-[1200px] bg-[#00E5FF] rounded-full blur-[300px] opacity-[0.06] mix-blend-screen" />
+
+    {/* Center Depth Glow */}
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100vw] h-[100vw] bg-[radial-gradient(circle_at_center,rgba(0,229,255,0.03)_0%,transparent_60%)]" />
+
+    {/* Premium Glass Noise Texture (1-2% Opacity) */}
+    <div className="absolute inset-0 opacity-[0.015] mix-blend-overlay">
+      <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+        <filter id="noiseFilterSkills">
+          <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#noiseFilterSkills)" />
+      </svg>
+    </div>
+  </motion.div>
+);
 
 export default function Expertise() {
   const containerVariants = {
@@ -25,148 +54,136 @@ export default function Expertise() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: 0.08,
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 15 },
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
+      transition: { duration: 0.5, ease: "easeOut" }
     }
   };
 
   return (
-    <section id="expertise" className="relative py-24 md:py-32 bg-[var(--color-bg)]">
-      <div className="w-full max-w-7xl mx-auto px-6 lg:px-8">
+    <section 
+      id="expertise" 
+      className="relative w-full min-h-[90vh] bg-[#050B14] flex flex-col justify-center py-16 lg:py-24 overflow-hidden"
+    >
+      <Background />
+
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 lg:px-8 flex flex-col items-center">
         
-        {/* Section Header */}
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
+        {/* Section Header (Matching About & Projects) */}
+        <div className="relative flex justify-center mb-6 w-full flex-shrink-0">
+          <motion.div
+            initial={{ opacity: 0, y: -15 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
-            className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[var(--color-text-primary)] mb-6"
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+            className="text-center relative z-10"
           >
-            Technical Expertise
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-base md:text-lg text-[var(--color-text-secondary)] leading-relaxed text-balance"
-          >
-            A collection of technologies and concepts I use to design, build, and maintain modern applications.
-          </motion.p>
+            <h2 className="text-2xl md:text-4xl font-extrabold text-[#FFFFFF] tracking-tight mb-1 uppercase">
+              TECHNICAL EXPERTISE
+            </h2>
+            <p className="text-[#00E5FF] text-xs md:text-sm font-medium tracking-wide uppercase">
+              Technologies & Tools I Work With
+            </p>
+          </motion.div>
         </div>
 
-        {/* 2-Column Responsive Grid */}
+        {/* Hierarchy Tree & Cards */}
         <motion.div 
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-8"
+          className="flex flex-col items-center w-full max-w-5xl mx-auto relative z-10 mt-2"
         >
-          {/* Programming Languages */}
-          <motion.div variants={itemVariants}>
-            <ExpertiseCard title="Programming Languages" className="h-full">
-              <div className="grid grid-cols-2 gap-4">
-                <TechItem icon={FaJava} name="Java" />
-                <TechItem icon={SiJavascript} name="JavaScript" />
-                <TechItem icon={SiPython} name="Python" />
-                <TechItem icon={SiCplusplus} name="C++" />
-              </div>
-            </ExpertiseCard>
-          </motion.div>
+          {/* Vertical Line Descending from Header */}
+          <div className="hidden lg:block w-px h-[24px] bg-gradient-to-b from-[rgba(0,229,255,0.4)] to-[rgba(0,229,255,0.15)] relative">
+            <div className="absolute bottom-0 left-1/2 w-[6px] h-[6px] rounded-full bg-[#00E5FF] shadow-[0_0_10px_rgba(0,229,255,1)] -translate-x-1/2 translate-y-[3px] z-20" />
+          </div>
 
-          {/* Frontend Development */}
-          <motion.div variants={itemVariants}>
-            <ExpertiseCard title="Frontend Development" className="h-full">
-              <div className="flex flex-col gap-4">
-                <TechItem icon={SiReact} name="React" label="UI Framework" />
-                <div className="grid grid-cols-2 gap-4">
-                  <TechItem icon={SiVite} name="Vite" label="Build Tool" />
-                  <TechItem icon={SiTailwindcss} name="Tailwind CSS" label="Styling" />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <TechItem icon={SiFramer} name="Framer Motion" label="Animation" />
-                  <TechItem icon={SiReactrouter} name="React Router" label="Routing" />
-                </div>
-              </div>
-            </ExpertiseCard>
-          </motion.div>
+          <div className="w-full relative pt-[16px] pb-[16px]">
+            {/* Top Tree Connections */}
+            <div className="hidden lg:block absolute top-0 left-[calc(16.666%-8px)] right-[calc(16.666%-8px)] h-[16px] border-t border-l border-r border-[rgba(0,229,255,0.2)] rounded-t-[12px] z-0" />
+            <div className="hidden lg:block absolute top-0 left-1/2 w-px h-[16px] bg-[rgba(0,229,255,0.2)] -translate-x-1/2 z-0" />
 
-          {/* Backend Development */}
-          <motion.div variants={itemVariants}>
-            <ExpertiseCard title="Backend Development" className="h-full">
-              <div className="flex flex-col gap-4">
-                <TechItem icon={SiNodedotjs} name="Node.js" label="Runtime" />
-                <div className="grid grid-cols-2 gap-4">
-                  <TechItem icon={SiExpress} name="Express.js" label="Framework" />
-                  <TechItem icon={ServerCog} name="REST APIs" label="Architecture" />
-                </div>
-                <TechItem icon={SiJsonwebtokens} name="JWT" label="Authentication" />
-              </div>
-            </ExpertiseCard>
-          </motion.div>
+            {/* Bottom Tree Connections */}
+            <div className="hidden lg:block absolute bottom-0 left-[calc(16.666%-8px)] right-[calc(16.666%-8px)] h-[16px] border-b border-l border-r border-[rgba(0,229,255,0.2)] rounded-b-[12px] z-0" />
+            <div className="hidden lg:block absolute bottom-0 left-1/2 w-px h-[16px] bg-[rgba(0,229,255,0.2)] -translate-x-1/2 z-0" />
 
-          {/* Databases */}
-          <motion.div variants={itemVariants}>
-            <ExpertiseCard title="Databases" className="h-full">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 h-full content-start">
-                <TechItem icon={SiMongodb} name="MongoDB" label="NoSQL Document" />
-                <TechItem icon={SiMysql} name="MySQL" label="Relational" />
-              </div>
-            </ExpertiseCard>
-          </motion.div>
-
-          {/* Tools & Platforms */}
-          <motion.div variants={itemVariants}>
-            <ExpertiseCard title="Tools & Platforms" className="h-full">
-              <div className="space-y-6">
-                <div>
-                  <h4 className="text-xs font-semibold uppercase text-[var(--color-text-secondary)] mb-3">Version Control</h4>
-                  <div className="grid grid-cols-2 gap-4">
-                    <TechItem icon={SiGit} name="Git" />
-                    <TechItem icon={FaGithub} name="GitHub" />
+            {/* Level 1: 3-Column Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 relative z-10">
+              
+              {/* Languages & Programming */}
+              <motion.div variants={itemVariants} className="w-full">
+                <ExpertiseCard title="Languages & Programming" icon={<Code2 className="w-4 h-4" />}>
+                  <div className="grid grid-cols-2 gap-2">
+                    <TechItem icon={SiC} name="C" iconColor="#A8B9CC" />
+                    <TechItem icon={SiJavascript} name="JavaScript" iconColor="#F7DF1E" />
+                    <TechItem icon={SiCplusplus} name="C++" iconColor="#00599C" />
+                    <TechItem icon={SiHtml5} name="HTML" iconColor="#E34F26" />
+                    <TechItem icon={FaJava} name="Java" iconColor="#ED8B00" />
+                    <TechItem icon={FaCss3Alt} name="CSS" iconColor="#1572B6" />
+                    <TechItem icon={SiPython} name="Python" iconColor="#3776AB" />
                   </div>
-                </div>
-                <div>
-                  <h4 className="text-xs font-semibold uppercase text-[var(--color-text-secondary)] mb-3">Testing & Dev</h4>
-                  <div className="grid grid-cols-2 gap-4">
-                    <TechItem icon={SiPostman} name="Postman" />
-                    <TechItem icon={FaCode} name="VS Code" />
-                  </div>
-                </div>
-                <div>
-                  <h4 className="text-xs font-semibold uppercase text-[var(--color-text-secondary)] mb-3">Deployment</h4>
-                  <div className="grid grid-cols-2 gap-4">
-                    <TechItem icon={SiVercel} name="Vercel" />
-                    <TechItem icon={SiRender} name="Render" />
-                  </div>
-                </div>
-              </div>
-            </ExpertiseCard>
-          </motion.div>
+                </ExpertiseCard>
+              </motion.div>
 
-          {/* Core Computer Science */}
-          <motion.div variants={itemVariants}>
-            <ExpertiseCard title="Core Computer Science" className="h-full">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <TechItem icon={Network} name="DSA" label="Data Structures & Algorithms" />
-                <TechItem icon={Blocks} name="OOP" label="Object-Oriented Programming" />
-                <TechItem icon={Database} name="DBMS" label="Database Management Systems" />
-                <TechItem icon={Cpu} name="OS" label="Operating Systems" />
-                <TechItem icon={Globe} name="CN" label="Computer Networks" className="sm:col-span-2" />
-              </div>
-            </ExpertiseCard>
-          </motion.div>
+              {/* Web Development */}
+              <motion.div variants={itemVariants} className="w-full">
+                <ExpertiseCard title="Web Development" icon={<Globe className="w-4 h-4" />}>
+                  <div className="grid grid-cols-2 gap-2">
+                    <TechItem icon={SiReact} name="React" iconColor="#61DAFB" />
+                    <TechItem icon={SiTailwindcss} name="Tailwind CSS" iconColor="#06B6D4" />
+                    <TechItem icon={SiNextdotjs} name="Next.js" iconColor="#FFFFFF" />
+                    <TechItem icon={SiBootstrap} name="Bootstrap" iconColor="#7952B3" />
+                    <TechItem icon={SiRedux} name="Redux" iconColor="#764ABC" />
+                    <TechItem icon={Code2} name="DOM Manipulation" iconColor="#E6F1FF" />
+                  </div>
+                </ExpertiseCard>
+              </motion.div>
+
+              {/* Databases & Backend */}
+              <motion.div variants={itemVariants} className="w-full">
+                <ExpertiseCard title="Databases & Backend" icon={<Database className="w-4 h-4" />}>
+                  <div className="grid grid-cols-2 gap-2">
+                    <TechItem icon={SiMongodb} name="MongoDB" iconColor="#47A248" />
+                    <TechItem icon={ServerCog} name="API Development" iconColor="#E6F1FF" />
+                    <TechItem icon={SiMysql} name="MySQL" iconColor="#4479A1" />
+                    <TechItem icon={SiNodedotjs} name="Node.js" iconColor="#339933" />
+                    <TechItem icon={Braces} name="REST APIs" iconColor="#00E5FF" />
+                  </div>
+                </ExpertiseCard>
+              </motion.div>
+
+            </div>
+          </div>
+
+          {/* Vertical Line Descending to Level 2 */}
+          <div className="hidden lg:block w-px h-[24px] bg-gradient-to-t from-[rgba(0,229,255,0.4)] to-[rgba(0,229,255,0.2)] relative">
+            <div className="absolute top-0 left-1/2 w-[6px] h-[6px] rounded-full bg-[#00E5FF] shadow-[0_0_10px_rgba(0,229,255,1)] -translate-x-1/2 -translate-y-[3px] z-20" />
+          </div>
+
+          {/* Level 2: Systems & Tools */}
+          <div className="w-full lg:w-[65%] relative z-10">
+            <motion.div variants={itemVariants} className="w-full relative z-10">
+              <ExpertiseCard title="Systems & Tools" icon={<Wrench className="w-4 h-4" />} className="!py-3">
+                <div className="flex flex-wrap justify-center gap-2">
+                  <TechItem icon={SiGit} name="Git" iconColor="#F05032" />
+                  <TechItem icon={FaGithub} name="GitHub" iconColor="#FFFFFF" />
+                  <TechItem icon={SiDocker} name="Docker" iconColor="#2496ED" />
+                  <TechItem icon={SiRender} name="Render" iconColor="#FFFFFF" />
+                  <TechItem icon={SiPostman} name="Postman" iconColor="#FF6C37" />
+                </div>
+              </ExpertiseCard>
+            </motion.div>
+          </div>
 
         </motion.div>
       </div>

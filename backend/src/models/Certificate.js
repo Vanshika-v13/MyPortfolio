@@ -23,6 +23,22 @@ const certificateSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    description: {
+      type: String,
+      trim: true,
+    },
+    skills: {
+      type: [String],
+      default: [],
+    },
+    status: {
+      type: String,
+      trim: true,
+    },
+    level: {
+      type: String,
+      trim: true,
+    },
   },
   {
     timestamps: true,

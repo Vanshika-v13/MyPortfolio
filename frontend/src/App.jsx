@@ -20,7 +20,6 @@ import SEO from './components/common/SEO';
 const NotFound = React.lazy(() => import('./pages/NotFound'));
 const ProjectDetails = React.lazy(() => import('./pages/ProjectDetails'));
 const Journey = React.lazy(() => import('./components/features/Journey'));
-const Achievements = React.lazy(() => import('./components/features/Achievements'));
 const Contact = React.lazy(() => import('./components/features/Contact'));
 const Footer = React.lazy(() => import('./components/layout/Footer'));
 
@@ -47,7 +46,6 @@ function MainLayout() {
         <Expertise />
         <Suspense fallback={<SectionFallback />}>
           <Journey />
-          <Achievements />
           <Contact />
         </Suspense>
       </main>

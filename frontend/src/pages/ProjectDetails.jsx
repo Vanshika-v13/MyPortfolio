@@ -106,20 +106,28 @@ export default function ProjectDetails() {
     visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } }
   };
 
-  // Reusable Tech Stack Component
+  // Reusable Tech Stack Component — staggered pill entrance
   const TechStackList = ({ className }) => (
     <motion.div
       className={`pd-tech-section ${className}`}
-      variants={bottomAnim}
       initial="hidden"
       animate="visible"
+      variants={{ visible: { transition: { staggerChildren: 0.06, delayChildren: 0.3 } } }}
     >
       <div className="pd-tags">
         {technologies.map((tech, i) => (
-          <div key={i} className="pd-tag">
+          <motion.div
+            key={i}
+            className="pd-tag"
+            variants={{
+              hidden: { opacity: 0, y: 8, scale: 0.95 },
+              visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.35, ease: 'easeOut' } }
+            }}
+            whileHover={{ scale: 1.04, transition: { duration: 0.15 } }}
+          >
             <span className="pd-tag-icon">{getTechIcon(tech)}</span>
             <span className="pd-tag-label">{tech}</span>
-          </div>
+          </motion.div>
         ))}
       </div>
     </motion.div>
@@ -141,10 +149,8 @@ export default function ProjectDetails() {
         <div className="pd-bg-layer-8" /> {/* Noise Texture */}
         <div className="pd-bg-layer-2" /> {/* Blueprint Grid */}
         
-        {/* Layer 3 & 5: Engineering Lines, Circuit Paths & Nodes */}
+        {/* Layer 3 & 5: Engineering Circuit Nodes */}
         <div className="pd-bg-layer-3">
-          <div className="pd-circuit-path pd-circuit-title" />
-          <div className="pd-circuit-path pd-circuit-screenshot" />
           
           {Array.from({ length: 25 }, (_, i) => (
             <div 
@@ -266,6 +272,8 @@ export default function ProjectDetails() {
               animate="visible"
             >
               <div className="pd-screenshot-frame">
+                {/* Subtle top-edge shine for premium depth */}
+                <div className="pd-screenshot-shine" aria-hidden="true" />
                 {project.detailsImage || project.thumbnail ? (
                   <img
                     src={project.detailsImage || project.thumbnail}
@@ -284,18 +292,33 @@ export default function ProjectDetails() {
             {features.length > 0 && (
               <motion.div
                 className="pd-features-section"
-                variants={bottomAnim}
                 initial="hidden"
                 animate="visible"
+                variants={{ visible: { transition: { staggerChildren: 0.07, delayChildren: 0.45 } } }}
               >
                 <div className="pd-features-grid">
                   {features.map((feature, idx) => {
                     const title = typeof feature === 'string' ? feature : (feature.title || 'Feature');
                     return (
-                      <div key={idx} className="pd-feature-item">
+                      <motion.div
+                        key={idx}
+                        className={`pd-feature-item pd-feature-item--${idx % 3 === 0 ? 'primary' : idx % 3 === 1 ? 'secondary' : 'tertiary'}`}
+                        variants={{
+                          hidden: { opacity: 0, y: 12, scale: 0.96 },
+                          visible: {
+                            opacity: 1,
+                            y: 0,
+                            scale: 1,
+                            transition: {
+                              duration: 0.45,
+                              ease: [0.22, 1, 0.36, 1]
+                            }
+                          }
+                        }}
+                      >
                         <span className="pd-feature-check">✓</span>
                         <span className="pd-feature-title">{title}</span>
-                      </div>
+                      </motion.div>
                     );
                   })}
                 </div>

@@ -1,153 +1,167 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, Layers, Terminal, Compass, Zap, GitBranch, Database, Layout } from 'lucide-react';
 
-const skillsDeveloped = [
-  { label: "System Design Thinking", icon: Layers },
-  { label: "API Development", icon: Zap },
-  { label: "Database Modeling", icon: Database },
-  { label: "Responsive UI Development", icon: Layout },
-  { label: "Debugging & Optimization", icon: Terminal },
-  { label: "Collaborative Workflows", icon: GitBranch },
+const leftCards = [
+  {
+    title: "Full-Stack Development",
+    subtitle: "Engineering & Architecture",
+    description: "Designing and developing scalable web applications across the full technology stack with a strong focus on performance, usability, maintainable architecture, and real-world problem solving.",
+    highlights: [
+      "Building and deploying applications across diverse domains.",
+      "Developing responsive interfaces using modern frontend technologies.",
+      "Designing backend services, APIs, and scalable databases.",
+      "Applying algorithmic thinking to optimize application performance."
+    ]
+  },
+  {
+    title: "Amity University (2023–2027)",
+    subtitle: "B.Tech Computer Science",
+    description: "Building a strong foundation in computer science while combining academic excellence with practical software engineering experience.",
+    highlights: [
+      "Maintaining a strong academic record with a CGPA of 9.29.",
+      "Strengthening expertise in databases, algorithms, and system design.",
+      "Applying theoretical concepts through real-world software projects.",
+      "Collaborating on technical initiatives and development activities."
+    ]
+  }
+];
+
+const rightCards = [
+  { title: "Academic Excellence", value: "9.29 CGPA" },
+  { title: "Project Development", value: "Full-Stack Applications" },
+  { title: "Problem Solving", value: "Algorithmic Logic" },
+  { title: "Continuous Learning", value: "Adaptable & Driven" },
 ];
 
 export default function Journey() {
   return (
-    <section id="journey" className="relative py-24 md:py-32 overflow-hidden">
-      <div className="w-full max-w-7xl mx-auto px-6 lg:px-8">
-        
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-          
-          {/* LEFT SIDE: NARRATIVE */}
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-            className="flex flex-col space-y-10"
-          >
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-[var(--color-text-primary)] mb-4">
-                My Journey
-              </h2>
-              <p className="text-lg text-[var(--color-text-secondary)]">
-                A continuous process of learning, building, and refining how I approach technology and problem-solving.
-              </p>
-            </div>
-            
-            <div className="space-y-6 text-base text-[var(--color-text-secondary)] leading-relaxed">
-              <p>
-                My entry into software development was driven by a deep curiosity about how digital products operate at scale. Exploring beyond the surface level, I found myself captivated by the architecture that ensures systems are resilient, performant, and secure.
-              </p>
-              <p>
-                As I progressed from learning core programming fundamentals to exploring frontend interactivity and backend system design, my focus shifted from just making things work to building them correctly. Every project has been an opportunity to understand new paradigms, tackle complex engineering challenges, and develop a structured approach to problem-solving.
-              </p>
-            </div>
+    <section id="journey" className="relative py-24 min-h-[90vh] flex items-center justify-center overflow-hidden bg-[#050B14]">
+      <style>
+        {`
+          .journey-card {
+            background-color: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(0, 229, 255, 0.12);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.35);
+            transition: all 0.3s ease;
+          }
+          .journey-card:hover {
+            border-color: rgba(0, 229, 255, 0.25);
+            box-shadow: 0 10px 40px -10px rgba(0, 229, 255, 0.08), 0 10px 30px -10px rgba(0, 0, 0, 0.35);
+          }
+        `}
+      </style>
 
-            {/* Skills Developed */}
-            <div>
-              <h3 className="text-sm font-semibold tracking-wider uppercase text-[var(--color-text-primary)] mb-6">
-                Core Competencies Developed
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {skillsDeveloped.map((skill, idx) => (
-                  <motion.div 
+      {/* Background Depth Layers */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#071425_0%,transparent_100%)] opacity-100 z-0 pointer-events-none"></div>
+      
+      {/* Atmospheres */}
+      {/* Left Ambient Glow */}
+      <div className="absolute top-[-30%] left-[-20%] w-[1000px] h-[1000px] bg-[#1E4DFF] rounded-full blur-[350px] opacity-[0.10] z-0 pointer-events-none"></div>
+      {/* Right Ambient Glow */}
+      <div className="absolute bottom-[-30%] right-[-20%] w-[1000px] h-[1000px] bg-[#00E5FF] rounded-full blur-[350px] opacity-[0.08] z-0 pointer-events-none"></div>
+      {/* Center Depth Glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,229,255,0.03)_0%,transparent_100%)] z-0 pointer-events-none"></div>
+
+      <div className="relative w-full max-w-7xl mx-auto px-6 lg:px-8 z-10 flex flex-col pt-4 pb-4">
+        
+        {/* Section Header */}
+        <div className="relative flex justify-center mb-16 md:mb-20 w-full flex-shrink-0 -mt-16 md:-mt-20">
+          <motion.div
+            initial={{ opacity: 0, y: -15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+            className="text-center relative z-10"
+          >
+            <h2 className="text-2xl md:text-4xl font-extrabold text-[#E6F1FF] tracking-tight mb-4 uppercase">
+              PROFESSIONAL JOURNEY
+            </h2>
+            <p className="text-[#00E5FF] text-xs md:text-sm font-medium tracking-wide uppercase">
+              Growth Through Learning, Engineering, And Continuous Problem Solving.
+            </p>
+          </motion.div>
+        </div>
+        
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start w-full">
+          
+          {/* LEFT SIDE: Story Cards (65%) */}
+          <div className="w-full lg:w-[65%] flex flex-col gap-6">
+            {leftCards.map((card, idx) => (
+              <motion.div 
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: idx * 0.15 }}
+                className="journey-card relative px-6 py-5 md:px-8 md:py-6 rounded-2xl"
+              >
+                <div className="mb-3">
+                  <h3 className="text-xl md:text-2xl font-bold text-[#E6F1FF] leading-tight">
+                    {card.title}
+                  </h3>
+                  {card.subtitle && (
+                    <p className="text-sm md:text-base font-medium text-[#00E5FF] mt-1">
+                      {card.subtitle}
+                    </p>
+                  )}
+                </div>
+
+                <p className="text-sm md:text-base text-[#A9B4C7] mb-4 leading-relaxed">
+                  {card.description}
+                </p>
+
+                <ul className="space-y-2">
+                  {card.highlights.map((highlight, hIdx) => (
+                    <li key={hIdx} className="flex items-start gap-3">
+                      <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#00E5FF] opacity-80 flex-shrink-0"></span>
+                      <span className="text-sm md:text-[15px] text-[#A9B4C7] leading-snug">
+                        {highlight}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* RIGHT SIDE: Capability Cards (35%) */}
+          <div className="w-full lg:w-[35%] flex flex-col gap-5">
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="mb-6">
+                <h3 className="text-[#00E5FF] text-xs md:text-sm font-medium tracking-wide uppercase mb-2">
+                  WHAT I BRING
+                </h3>
+                <p className="text-[#A9B4C7] text-sm leading-relaxed">
+                  Key strengths developed through academics, projects, and practical engineering experience.
+                </p>
+              </div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+                {rightCards.map((card, idx) => (
+                  <motion.div
                     key={idx}
-                    initial={{ opacity: 0, y: 10 }}
+                    initial={{ opacity: 0, y: 15 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: idx * 0.1 }}
-                    className="flex items-center gap-3 p-3 rounded-xl bg-[var(--color-surface)] border border-[var(--color-surface-elevated)]"
+                    transition={{ duration: 0.4, delay: idx * 0.1 }}
+                    className="journey-card relative p-5 rounded-xl flex flex-col justify-center"
                   >
-                    <div className="p-2 rounded-lg bg-[var(--color-bg)]">
-                      <skill.icon className="w-4 h-4 text-[var(--color-accent)]" />
-                    </div>
-                    <span className="text-sm font-medium text-[var(--color-text-primary)]">
-                      {skill.label}
-                    </span>
+                    <p className="text-[11px] font-semibold tracking-widest uppercase text-[#A9B4C7] opacity-80 mb-1.5">
+                      {card.title}
+                    </p>
+                    <p className="text-[15px] font-medium text-[#E6F1FF]">
+                      {card.value}
+                    </p>
                   </motion.div>
                 ))}
               </div>
-            </div>
-
-            {/* Future Direction */}
-            <div className="p-6 rounded-2xl bg-[var(--color-surface)] border-l-2 border-[var(--color-accent)]">
-              <div className="flex items-center gap-3 mb-3">
-                <Compass className="w-5 h-5 text-[var(--color-accent)]" />
-                <h4 className="text-lg font-bold text-[var(--color-text-primary)]">Looking Forward</h4>
-              </div>
-              <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
-                I am continuously seeking opportunities to build scalable products, strengthen my expertise in backend engineering, and learn modern architectural patterns. My goal is to contribute to impactful solutions with a focus on code quality, user experience, and systems thinking.
-              </p>
-            </div>
-            
-          </motion.div>
-
-          {/* RIGHT SIDE: VISUAL REPRESENTATION */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="relative w-full h-[500px] flex items-center justify-center lg:justify-end"
-          >
-            {/* Abstract background glow */}
-            <div className="absolute top-1/2 left-1/2 lg:left-3/4 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] rounded-full bg-gradient-to-tr from-[var(--color-accent-secondary)]/10 to-[var(--color-accent)]/5 blur-3xl pointer-events-none"></div>
-
-            {/* Visual Node System */}
-            <div className="relative w-full max-w-[400px] h-full flex flex-col items-center justify-center gap-6">
-              
-              {/* Layer 1: Foundation */}
-              <motion.div 
-                animate={{ y: [0, -5, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                className="w-48 p-4 rounded-2xl bg-[var(--color-surface)] border border-[var(--color-surface-elevated)] shadow-subtle flex flex-col items-center justify-center gap-2 z-10"
-              >
-                <BookOpen className="w-6 h-6 text-[var(--color-text-secondary)]" />
-                <div className="w-16 h-1 rounded-full bg-[var(--color-surface-elevated)]"></div>
-              </motion.div>
-
-              {/* Connecting line */}
-              <div className="w-px h-8 bg-gradient-to-b from-[var(--color-surface-elevated)] to-transparent"></div>
-
-              {/* Layer 2: Core Engineering */}
-              <div className="flex gap-6 z-20">
-                <motion.div 
-                  animate={{ y: [0, 8, 0] }}
-                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                  className="w-32 p-4 rounded-xl bg-[var(--color-bg)] border border-[var(--color-surface-elevated)] shadow-elevated flex items-center justify-center"
-                >
-                  <Terminal className="w-6 h-6 text-[var(--color-accent)]" />
-                </motion.div>
-                <motion.div 
-                  animate={{ y: [0, -8, 0] }}
-                  transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
-                  className="w-32 p-4 rounded-xl bg-[var(--color-surface)] border border-[var(--color-surface-elevated)] shadow-subtle flex items-center justify-center"
-                >
-                  <Database className="w-6 h-6 text-[var(--color-accent-secondary)]" />
-                </motion.div>
-              </div>
-
-              {/* Connecting line */}
-              <div className="w-px h-8 bg-gradient-to-t from-[var(--color-accent)]/30 to-transparent"></div>
-
-              {/* Layer 3: System Complexity */}
-              <motion.div 
-                animate={{ scale: [1, 1.02, 1] }}
-                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                className="w-64 p-5 rounded-2xl bg-[var(--color-bg)] border border-[var(--color-accent)]/20 shadow-elevated flex flex-col items-center justify-center gap-3 z-30"
-              >
-                <div className="flex gap-2">
-                  <div className="w-2 h-2 rounded-full bg-[var(--color-accent)]"></div>
-                  <div className="w-2 h-2 rounded-full bg-[var(--color-accent-secondary)]"></div>
-                  <div className="w-2 h-2 rounded-full bg-[var(--color-text-secondary)]"></div>
-                </div>
-                <div className="w-3/4 h-1 rounded-full bg-[var(--color-surface-elevated)]"></div>
-                <div className="w-1/2 h-1 rounded-full bg-[var(--color-surface-elevated)]"></div>
-              </motion.div>
-              
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
 
         </div>
       </div>

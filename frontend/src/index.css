@@ -16,6 +16,10 @@
     overflow-x: hidden; /* Prevent horizontal scroll from off-canvas atmospheric layers */
   }
 
+  section[id] {
+    scroll-margin-top: 80px;
+  }
+
   .dark {
     --color-bg: #09090B;
     --color-surface: #111827;

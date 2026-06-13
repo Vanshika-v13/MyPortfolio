@@ -1,72 +1,35 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
-export default function ExpertiseCard({ title, children, className = '' }) {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+export default function ExpertiseCard({ title, icon, children, className = '' }) {
   const [isHovered, setIsHovered] = useState(false);
-  const cardRef = useRef(null);
   
-  // Performance optimization for spotlight
-  useEffect(() => {
-    let animationFrameId;
-    
-    const handleMouseMove = (e) => {
-      if (!cardRef.current || !isHovered) return;
-      
-      const rect = cardRef.current.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      // Throttle via requestAnimationFrame
-      animationFrameId = requestAnimationFrame(() => {
-        setMousePosition({ x, y });
-      });
-    };
-    
-    if (isHovered) {
-      window.addEventListener('mousemove', handleMouseMove);
-    }
-    
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      if (animationFrameId) cancelAnimationFrame(animationFrameId);
-    };
-  }, [isHovered]);
-
   return (
     <motion.div
-      ref={cardRef}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.3 }}
-      className={`group relative overflow-hidden rounded-3xl bg-[var(--color-surface)] border border-[var(--color-surface-elevated)] p-8 md:p-10 shadow-subtle hover:shadow-elevated transition-all duration-300 ${className}`}
+      className={`group relative overflow-hidden rounded-[16px] flex flex-col p-5 transition-colors duration-200 ${className}`}
+      style={{
+        background: 'rgba(255, 255, 255, 0.04)',
+        border: '1px solid',
+        borderColor: isHovered ? 'rgba(0, 229, 255, 0.25)' : 'rgba(0, 229, 255, 0.12)',
+        boxShadow: '0 10px 40px rgba(0, 0, 0, 0.35)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+      }}
     >
-      {/* Spotlight Effect */}
-      <div 
-        className="pointer-events-none absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{
-          background: `radial-gradient(400px circle at ${mousePosition.x}px ${mousePosition.y}px, var(--color-accent), transparent 40%)`,
-          mixBlendMode: 'soft-light',
-          opacity: isHovered ? 0.15 : 0 // Extremely subtle
-        }}
-      />
-      
-      {/* Background Connection Lines Effect */}
-      <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
-        <svg width="100%" height="100%" className="opacity-[0.03]">
-          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="1"/>
-          </pattern>
-          <rect width="100%" height="100%" fill="url(#grid)" />
-        </svg>
-      </div>
-
-      <div className="relative z-10">
-        <h3 className="text-sm font-semibold tracking-wider uppercase text-[var(--color-text-secondary)] mb-8">
-          {title}
-        </h3>
-        <div className="w-full">
+      <div className="relative z-10 flex flex-col h-full">
+        <div className="flex items-center gap-3 mb-5">
+          {icon && (
+            <div className="flex items-center justify-center w-8 h-8 rounded-lg border border-[rgba(0,229,255,0.12)] text-[#A9B4C7] group-hover:text-[#00E5FF] group-hover:border-[rgba(0,229,255,0.25)] transition-colors duration-200 bg-[rgba(255,255,255,0.02)]">
+              {icon}
+            </div>
+          )}
+          <h3 className="text-sm md:text-base font-semibold tracking-wide text-[#E6F1FF]">
+            {title}
+          </h3>
+        </div>
+        <div className="flex-1 w-full">
           {children}
         </div>
       </div>
