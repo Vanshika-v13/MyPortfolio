@@ -1,0 +1,588 @@
+/* ═══════════════════════════════════════════════════════════════
+   ProjectDetails — Premium Engineering Stylesheet
+   Palette: #050B14 · #071425 · #E6F1FF · #A9B4C7 · #6B7A90
+   Accents: #1E4DFF · #00E5FF
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Page Shell ────────────────────────────────────────────────── */
+.pd-page {
+  min-height: 100vh;
+  background-color: #050B14;
+  color: #E6F1FF;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ── Premium Engineering Background System ─────────────────────── */
+.pd-bg-system {
+  position: fixed; /* Keep background fixed to avoid scrolling motion */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* Layer 1: Base */
+.pd-bg-layer-1 {
+  position: absolute;
+  inset: 0;
+  background-color: #050B14;
+}
+
+/* Layer 8: Subtle Noise */
+.pd-bg-layer-8 {
+  position: absolute;
+  inset: 0;
+  opacity: 0.015;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Layer 2: Dual Layer Blueprint Grid */
+.pd-bg-layer-2 {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(0, 229, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 229, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to right, rgba(0, 229, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 229, 255, 0.02) 1px, transparent 1px);
+  background-size: 320px 320px, 320px 320px, 80px 80px, 80px 80px;
+  background-position: center center;
+}
+
+/* Layer 3: Engineering Circuit Paths & Nodes */
+.pd-bg-layer-3 {
+  position: absolute;
+  inset: 0;
+}
+
+.pd-circuit-path {
+  position: absolute;
+  border: 1px solid rgba(0, 229, 255, 0.15);
+  box-shadow: 0 0 8px rgba(0, 229, 255, 0.2);
+  border-radius: 6px;
+}
+
+.pd-circuit-title {
+  top: 15%;
+  left: 5%;
+  width: 400px;
+  height: 250px;
+  border-bottom: none;
+  border-right: none;
+}
+
+.pd-circuit-screenshot {
+  top: 25%;
+  right: 2%;
+  width: 60vw;
+  height: 65vh;
+  border-top: none;
+  border-left: none;
+}
+
+.pd-bg-random-node {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: #00E5FF;
+  box-shadow: 0 0 6px #00E5FF, 0 0 12px #00E5FF;
+  opacity: 0.6;
+}
+
+/* Layer 4: Faded Symbols (4-6rem, 0.02-0.04 opacity) */
+.pd-bg-layer-4 {
+  position: absolute;
+  inset: 0;
+}
+.pd-bg-symbol {
+  position: absolute;
+  font-family: monospace;
+  font-weight: 800;
+  color: #ffffff;
+  opacity: 0.03;
+  user-select: none;
+  font-size: 5rem;
+}
+.pd-bg-sym-1 { top: 15%; left: 8%; transform: rotate(-10deg); }
+.pd-bg-sym-2 { bottom: 15%; right: 12%; transform: rotate(15deg); font-size: 6rem; }
+.pd-bg-sym-3 { top: 60%; left: 35%; transform: rotate(5deg); font-size: 4rem; opacity: 0.02; }
+.pd-bg-sym-4 { top: 25%; right: 25%; transform: rotate(-20deg); opacity: 0.04; }
+
+/* Layer 7: Bottom Waveform */
+.pd-bg-layer-7 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 350px;
+  pointer-events: none;
+}
+.pd-wave-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Layer 6: Localized Lighting */
+.pd-bg-layer-6 {
+  position: absolute;
+  inset: 0;
+}
+.pd-glow-spotlight-blue {
+  position: absolute;
+  top: 5%;
+  left: -10%;
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(30, 77, 255, 0.15) 0%, transparent 60%);
+  border-radius: 50%;
+  filter: blur(100px);
+}
+.pd-glow-spotlight-cyan {
+  position: absolute;
+  top: 20%;
+  right: -5%;
+  width: 900px;
+  height: 900px;
+  background: radial-gradient(circle, rgba(0, 229, 255, 0.12) 0%, transparent 65%);
+  border-radius: 50%;
+  filter: blur(100px);
+}
+
+/* ── Main Content Area ─────────────────────────────────────────── */
+.pd-content {
+  position: relative;
+  z-index: 10;
+  flex-grow: 1;
+  max-width: 1440px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 80px 48px 60px;
+}
+
+@media (max-width: 1024px) {
+  .pd-content {
+    padding: 60px 24px 40px;
+  }
+}
+
+/* ── Two-Column Grid ───────────────────────────────────────────── */
+.pd-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .pd-layout {
+    grid-template-columns: 42% 58%; /* 42 / 58 layout */
+    gap: 64px;
+  }
+}
+
+/* ── Left Column (42%) ─────────────────────────────────────────── */
+.pd-left {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* Back Link */
+.pd-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #6B7A90;
+  font-size: 13px;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 4px;
+  transition: color 0.2s ease;
+  align-self: flex-start;
+}
+
+.pd-back:hover {
+  color: #E6F1FF;
+}
+
+/* Title Rendering System */
+.pd-title-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+}
+
+.pd-title-line {
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  height: 1px;
+  width: 150%;
+  background: linear-gradient(90deg, #00E5FF 0%, transparent 100%);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.pd-title-primary {
+  font-size: 48px;
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  margin: 0;
+}
+
+.pd-title-secondary {
+  font-size: 40px;
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0;
+  background: linear-gradient(90deg, #1E4DFF 0%, #00E5FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@media (max-width: 1024px) {
+  .pd-title-primary { font-size: 38px; }
+  .pd-title-secondary { font-size: 32px; }
+  .pd-title-line { width: 100%; }
+}
+
+/* Impact Statement */
+.pd-impact-container {
+  border-left: 3px solid #00E5FF;
+  padding-left: 16px;
+  background: linear-gradient(90deg, rgba(0, 229, 255, 0.05) 0%, transparent 100%);
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.pd-impact {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #E6F1FF;
+  margin: 0;
+}
+
+/* Description */
+.pd-description {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #A9B4C7;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-width: 90%;
+}
+
+/* Action Buttons */
+.pd-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.pd-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 28px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.pd-btn-live {
+  background: linear-gradient(135deg, #1E4DFF 0%, #00E5FF 100%);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 15px rgba(30, 77, 255, 0.2);
+}
+
+.pd-btn-live:hover {
+  box-shadow: 0 6px 20px rgba(0, 229, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.pd-btn-source {
+  background: transparent;
+  color: #E6F1FF;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.pd-btn-source:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.03);
+  transform: translateY(-2px);
+}
+
+/* Tech Stack */
+.pd-tech-section {
+  margin-top: 8px;
+}
+
+.pd-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.pd-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  color: #A9B4C7;
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 18px; /* Perfectly rounded pills */
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.2s ease;
+  cursor: default;
+  white-space: nowrap;
+}
+
+.pd-tag-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #6B7A90;
+  transition: color 0.2s ease;
+}
+
+.pd-tag-label {
+  line-height: 1;
+}
+
+.pd-tag:hover {
+  color: #ffffff;
+  border-color: rgba(0, 229, 255, 0.3);
+  background: rgba(0, 229, 255, 0.05);
+  box-shadow: 0 0 15px rgba(0, 229, 255, 0.1);
+}
+
+.pd-tag:hover .pd-tag-icon {
+  color: #00E5FF;
+}
+
+/* Display Toggles for Mobile Stacking Order */
+.pd-mobile-only {
+  display: none;
+}
+@media (max-width: 1024px) {
+  .pd-desktop-only {
+    display: none;
+  }
+  .pd-mobile-only {
+    display: block;
+    margin-bottom: 32px;
+  }
+}
+
+/* ── Right Column (58%) ────────────────────────────────────────── */
+.pd-right {
+  display: flex;
+  flex-direction: column;
+  gap: 60px; /* More breathing room */
+  padding-top: 16px;
+}
+
+/* Screenshot Area */
+.pd-screenshot-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 0 7.5%; /* Reduces visual width to ~85% */
+}
+
+.pd-screenshot-frame {
+  background: #050B14;
+  border: 1px solid rgba(0, 229, 255, 0.2); /* Premium border lighting */
+  border-radius: 12px;
+  padding: 4px;
+  box-shadow: 
+    0 30px 60px rgba(0, 0, 0, 0.6),
+    0 0 50px rgba(0, 229, 255, 0.15), /* Stronger cyan outer glow */
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  position: relative;
+  width: 100%;
+}
+
+/* Cyan/Blue glows around frame */
+.pd-screenshot-frame::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 10%;
+  width: 80%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.6), transparent);
+  box-shadow: 0 -2px 10px rgba(0, 229, 255, 0.4);
+}
+
+.pd-screenshot-frame::after {
+  content: '';
+  position: absolute;
+  bottom: -30px;
+  left: 10%;
+  width: 80%;
+  height: 30px;
+  background: radial-gradient(ellipse at center, rgba(30, 77, 255, 0.3) 0%, transparent 70%);
+  filter: blur(15px);
+  z-index: -1;
+}
+
+.pd-screenshot-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.pd-no-screenshot {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: #071425;
+  color: #6B7A90;
+  font-size: 14px;
+}
+
+/* Key Features (Premium Mini-Cards format) */
+.pd-features-section {
+  width: 100%;
+  padding: 0 7.5%; /* Align with reduced screenshot width */
+}
+
+.pd-features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 20px;
+  column-gap: 24px;
+}
+
+@media (max-width: 640px) {
+  .pd-features-grid {
+    grid-template-columns: 1fr;
+    row-gap: 16px;
+  }
+  .pd-screenshot-wrapper, .pd-features-section {
+    padding: 0;
+  }
+  .pd-right {
+    gap: 40px;
+    padding-top: 0;
+  }
+}
+
+.pd-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.03); /* Premium mini-card bg */
+  border: 1px solid rgba(255, 255, 255, 0.06); /* Premium border */
+  border-radius: 12px;
+  padding: 12px 16px;
+  transition: all 0.2s ease;
+}
+
+.pd-feature-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.pd-feature-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(0, 229, 255, 0.1);
+  color: #00E5FF;
+  font-size: 12px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.pd-feature-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #E6F1FF;
+  line-height: 1.3;
+}
+
+/* ── Empty / Not Found State ───────────────────────────────────── */
+.pd-not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-grow: 1;
+  padding: 120px 24px;
+  z-index: 10;
+}
+
+.pd-not-found h1 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 16px 0;
+}
+
+.pd-not-found p {
+  font-size: 16px;
+  color: #6B7A90;
+  margin: 0 0 32px 0;
+  max-width: 420px;
+}
+
+.pd-not-found-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 44px;
+  padding: 0 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  color: #050B14;
+  background: #ffffff;
+  transition: all 0.2s ease;
+}
+
+.pd-not-found-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+}

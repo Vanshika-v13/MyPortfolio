@@ -1,5 +1,39 @@
 module.exports = [
   {
+    title: 'QuickCrave - FOOD Delivery app',
+    slug: 'quickcrave',
+    shortDescription:
+      'A real-time food delivery app featuring an AI Chatbot, live GPS tracking for riders via WebSockets, and a fast, responsive UI.',
+    fullDescription:
+      'QuickCrave is a comprehensive food delivery platform featuring a real-time ordering system, live GPS tracking via WebSockets, and a conversational AI Chatbot powered by Dialogflow for an intuitive ordering experience. It utilizes an asynchronous architecture to support robust role-based functionality for Customers, Riders, and Admins.',
+    thumbnail: '/quickCrave.png',
+    techStack: ['FastAPI', 'MongoDB', 'Redis', 'WebSockets', 'React', 'Vite', 'Tailwind CSS', 'Dialogflow'],
+    githubUrl: 'https://github.com/Vanshika-v13/QuickCrave-Food-Delievery-Project',
+    liveDemoUrl: 'https://quick-crave-food-delievery-project.vercel.app/',
+    features: [
+      'Conversational AI ordering with Dialogflow',
+      'Real-time live GPS tracking using WebSockets',
+      'Role-Based Access for Admins, Riders, and Customers',
+      'In-memory session cart management via Redis',
+    ],
+    architecture:
+      'FastAPI backend for high concurrency, utilizing motor for asynchronous MongoDB operations. WebSocket rooms group users by active orders, with Redis managing state and GPS tracking deduplication. The React frontend interacts seamlessly with the AI webhook and real-time sockets.',
+    challenges: [
+      'Managing high-frequency WebSocket GPS broadcasts',
+      'Securely linking external Dialogflow sessions to authenticated users',
+      'Preventing race conditions during order state transitions',
+    ],
+    learnings: [
+      'Throttling and caching WebSocket payloads in Redis significantly saves bandwidth',
+      'Asynchronous database drivers are critical for non-blocking socket handling',
+      'In-memory session management creates seamless chatbot-to-database flows',
+    ],
+    galleryImages: [
+      '/quickCrave.png'
+    ],
+    featured: true,
+  },
+  {
     title: 'Portfolio Platform',
     slug: 'portfolio-platform',
     shortDescription:

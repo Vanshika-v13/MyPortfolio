@@ -22,27 +22,40 @@ app.use(
   })
 );
 
-const allowedOrigin = process.env.CLIENT_URL;
+// Support one or more CLIENT_URL values (comma-separated) for dev flexibility
+const allowedOrigins = (process.env.CLIENT_URL || '')
+  .split(',')
+  .map((o) => o.trim())
+  .filter(Boolean);
 
-app.use(
-  cors({
-    origin(origin, callback) {
-      if (!origin || origin === allowedOrigin) {
-        callback(null, true);
-        return;
-      }
+const corsOptions = {
+  origin(origin, callback) {
+    // Allow same-origin / server-to-server calls (no Origin header)
+    if (!origin) {
+      callback(null, true);
+      return;
+    }
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
       callback(null, false);
-    },
-    credentials: true,
-    methods: ['GET', 'POST', 'OPTIONS'],
-    allowedHeaders: ['Content-Type'],
-  })
-);
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  optionsSuccessStatus: 200, // some legacy browsers choke on 204
+};
+
+// Handle preflight OPTIONS requests for every route before any other middleware
+app.options('*', cors(corsOptions));
+
+app.use(cors(corsOptions));
 
 app.use((req, res, next) => {
   const origin = req.headers.origin;
 
-  if (origin && origin !== allowedOrigin) {
+  if (origin && !allowedOrigins.includes(origin)) {
     return res.status(403).json({
       success: false,
       message: 'Origin not allowed',
