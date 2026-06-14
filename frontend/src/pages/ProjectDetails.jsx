@@ -209,7 +209,10 @@ export default function ProjectDetails() {
             animate="visible"
           >
             <button 
-              onClick={() => navigate('/')} 
+              onClick={() => {
+                sessionStorage.setItem("restorePortfolio", "true");
+                navigate('/');
+              }} 
               className="pd-back" 
               aria-label="Back to Projects"
             >

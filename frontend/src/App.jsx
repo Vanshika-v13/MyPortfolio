@@ -41,14 +41,32 @@ function MainLayout() {
   const location = useLocation();
 
   React.useLayoutEffect(() => {
-    // Restore exact scroll position
+    // Restore exact scroll position ONLY when navigating via "Back to Projects"
+    const shouldRestore = sessionStorage.getItem("restorePortfolio") === "true";
     const savedPosition = sessionStorage.getItem("portfolioScrollPosition");
-    if (savedPosition) {
+    if (shouldRestore && savedPosition) {
+      sessionStorage.removeItem("restorePortfolio");
+      sessionStorage.removeItem("portfolioScrollPosition");
       window.scrollTo({
         top: Number(savedPosition),
         behavior: "instant"
       });
-      sessionStorage.removeItem("portfolioScrollPosition");
+      return;
+    }
+    // Clean up stale keys if flag wasn't set
+    sessionStorage.removeItem("restorePortfolio");
+    sessionStorage.removeItem("portfolioScrollPosition");
+
+    // Handle navbar cross-route navigation (e.g. from /project/* → home section)
+    // Navbar passes { state: { scrollTo: 'about' } } when navigating from another route
+    const scrollTarget = location.state?.scrollTo;
+    if (scrollTarget) {
+      // Clear state immediately so a browser refresh does NOT re-trigger this scroll
+      window.history.replaceState({}, '');
+      const el = document.getElementById(scrollTarget);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
       return;
     }
 
@@ -60,7 +78,7 @@ function MainLayout() {
         element.scrollIntoView({ behavior: 'instant' });
       }
     }
-  }, [hasEntered, location.pathname, location.hash]);
+  }, [hasEntered, location.pathname, location.hash, location.state]);
 
   return (
     <div className="min-h-screen w-full relative">
