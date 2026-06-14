@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaEnvelope, FaReact, FaNodeJs, FaDocker } from 'react-icons/fa';
 import { SiMongodb } from 'react-icons/si';
 import { ChevronDown } from 'lucide-react';
-import heroImage from '../../assets/myPhoto_.jpeg';
 
 const TypewriterRole = () => {
   const roles = [
@@ -108,6 +107,8 @@ const AmbientParticles = () => {
 };
 
 export default function Hero() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section id="home" className="relative min-h-screen pt-24 pb-16 lg:pt-32 lg:pb-24 flex items-center bg-[#050B14] overflow-hidden">
       
@@ -205,72 +206,100 @@ export default function Hero() {
           </motion.div>
 
           {/* RIGHT SIDE PHOTO */}
+          {/* RIGHT SIDE PHOTO */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="relative flex justify-center lg:justify-end items-center mt-12 lg:mt-0"
+            className="relative flex justify-center lg:justify-end items-center mt-12 lg:mt-0 group translate-y-2"
           >
-            {/* Background Glows behind the image */}
-            <div className="absolute inset-0 m-auto w-[80%] h-[80%] bg-[#2D9CFF] rounded-full blur-[100px] opacity-[0.2] pointer-events-none"></div>
-            <div className="absolute top-10 left-10 w-[60%] h-[60%] bg-[#00D4FF] rounded-full blur-[80px] opacity-[0.15] pointer-events-none"></div>
-            <div className="absolute bottom-10 right-10 w-[60%] h-[60%] bg-[#6C63FF] rounded-full blur-[80px] opacity-[0.15] pointer-events-none"></div>
+            {/* Engineering-Themed Background Details */}
+            <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.15] font-mono text-[#00E5FF] text-sm">
+              <div className="absolute top-[5%] left-[10%]">{'<>'}</div>
+              <div className="absolute top-[85%] left-[5%] text-[#1E4DFF]">{'{}'}</div>
+              <div className="absolute top-[15%] right-[5%] text-[#1E4DFF]">{'[]'}</div>
+              <div className="absolute bottom-[10%] right-[15%]">{'//'}</div>
+              <div className="absolute top-[55%] -left-[10%]">{'()'}</div>
+            </div>
 
-            {/* Aurora Glass Frame */}
-            <div 
-              className="relative z-10 max-w-[400px] w-full"
-              style={{
-                background: 'rgba(16,24,39,0.65)',
-                backdropFilter: 'blur(20px)',
-                WebkitBackdropFilter: 'blur(20px)',
-                borderRadius: '24px',
-                padding: '12px',
-                boxShadow: '0 8px 32px rgba(0,0,0,0.5)'
-              }}
-            >
-              {/* Corner Accents */}
-              <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-[#2D9CFF]/30 rounded-tl-[24px] pointer-events-none z-20"></div>
-              <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-[#00D4FF]/30 rounded-tr-[24px] pointer-events-none z-20"></div>
-              <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-[#00D4FF]/30 rounded-bl-[24px] pointer-events-none z-20"></div>
-              <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-[#2D9CFF]/30 rounded-br-[24px] pointer-events-none z-20"></div>
-
-              {/* Light Reflection overlay inside the frame, clipped to frame */}
-              <div className="absolute inset-0 pointer-events-none rounded-[24px] overflow-hidden z-20">
-                <motion.div
-                  animate={{
-                    x: ['-200%', '200%'],
-                  }}
-                  transition={{
-                    duration: 7,
-                    ease: "linear",
-                    repeat: Infinity,
-                  }}
-                  className="w-full h-full bg-gradient-to-r from-transparent via-[rgba(255,255,255,0.04)] to-transparent skew-x-[-20deg]"
-                />
-              </div>
-
-              <img 
-                src={heroImage} 
-                alt="Vanshika Verma" 
-                className="w-full h-auto object-cover rounded-[16px] relative z-10"
-              />
+            <div className="relative flex items-center justify-center w-[440px] h-[440px]">
               
-              {/* Optional Tech Badges (Static after load) */}
-              <div className="absolute -top-4 -left-4 w-12 h-12 rounded-xl flex items-center justify-center border border-[rgba(255,255,255,0.08)] bg-[rgba(16,24,39,0.85)] backdrop-blur-md shadow-lg">
-                <FaReact size={24} className="text-[#00D4FF]" />
+              {/* Layer 5: Ultra-Subtle Outer Technical Ring (8-12% opacity, 1px stroke, no glow) */}
+              <svg className="absolute w-[440px] h-[440px] z-10 pointer-events-none opacity-[0.1]" viewBox="0 0 440 440">
+                <circle cx="220" cy="220" r="204" fill="none" stroke="#00E5FF" strokeWidth="1" strokeDasharray="4 8 1 8" />
+                <circle cx="220" cy="220" r="208" fill="none" stroke="#1E4DFF" strokeWidth="1" strokeDasharray="2 20" />
+                <path d="M 220 12 L 220 16 M 220 424 L 220 428 M 12 220 L 16 220 M 424 220 L 428 220" stroke="#00E5FF" strokeWidth="1.5" />
+              </svg>
+
+              {/* Layer 4: Segmented animated arcs with gradient */}
+              <div className="absolute w-[440px] h-[440px] z-20 pointer-events-none">
+                <svg className="absolute inset-0 w-full h-full" viewBox="0 0 440 440">
+                  <defs>
+                    <linearGradient id="cyanToBlueRight" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stopColor="#00E5FF" />
+                      <stop offset="100%" stopColor="#1E4DFF" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+
+                {/* Primary - Clockwise */}
+                <motion.svg 
+                  animate={{ rotate: shouldReduceMotion ? 0 : 360 }}
+                  transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                  className="absolute inset-0 w-full h-full"
+                  viewBox="0 0 440 440"
+                >
+                  {/* Right Arc (2-5 o'clock) */}
+                  <circle 
+                    cx="220" cy="220" r="190" fill="none" 
+                    stroke="url(#cyanToBlueRight)" strokeWidth="3" 
+                    strokeDasharray="298 896" strokeLinecap="round" 
+                    transform="rotate(-30 220 220)"
+                    style={{ filter: "drop-shadow(0 0 6px rgba(0,229,255,0.4))" }}
+                  />
+                  
+                  {/* Bottom Arc (6-7 o'clock) */}
+                  <circle 
+                    cx="220" cy="220" r="190" fill="none" 
+                    stroke="#00E5FF" strokeWidth="2.5" 
+                    strokeDasharray="100 1094" strokeLinecap="round" 
+                    transform="rotate(90 220 220)"
+                    style={{ filter: "drop-shadow(0 0 2px rgba(0,229,255,0.3))" }}
+                  />
+                </motion.svg>
+
+                {/* Secondary - Counter-Clockwise */}
+                <motion.svg 
+                  animate={{ rotate: shouldReduceMotion ? 0 : -360 }}
+                  transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                  className="absolute inset-0 w-full h-full"
+                  viewBox="0 0 440 440"
+                >
+                  {/* Top Arc (11-1 o'clock) */}
+                  <circle 
+                    cx="220" cy="220" r="190" fill="none" 
+                    stroke="#1E4DFF" strokeWidth="2.5" 
+                    strokeDasharray="199 995" strokeLinecap="round" 
+                    transform="rotate(-120 220 220)"
+                    style={{ filter: "drop-shadow(0 0 2px rgba(30,77,255,0.3))" }}
+                  />
+                </motion.svg>
               </div>
-              <div className="absolute top-1/4 -right-5 w-10 h-10 rounded-xl flex items-center justify-center border border-[rgba(255,255,255,0.08)] bg-[rgba(16,24,39,0.85)] backdrop-blur-md shadow-lg">
-                <FaNodeJs size={20} className="text-[#68A063]" />
+
+              {/* Layer 3: Controlled ambient glow */}
+              <div className="absolute w-[415px] h-[415px] bg-[#1E4DFF] rounded-full blur-[20px] opacity-[0.035] pointer-events-none z-20"></div>
+              
+              {/* Layer 2: Thin elegant border + Layer 1: Portrait image */}
+              <div className="relative w-[375px] h-[375px] rounded-full border-[2px] border-[#1E4DFF]/55 z-30 flex items-center justify-center bg-[#050B14]">
+                <div className="w-full h-full rounded-full overflow-hidden">
+                  <img 
+                    src="/images/profile.png.jpeg" 
+                    alt="Vanshika Verma" 
+                    className="w-full h-full object-cover object-top"
+                  />
+                </div>
               </div>
-              <div className="absolute bottom-1/4 -left-5 w-10 h-10 rounded-xl flex items-center justify-center border border-[rgba(255,255,255,0.08)] bg-[rgba(16,24,39,0.85)] backdrop-blur-md shadow-lg">
-                <SiMongodb size={20} className="text-[#4DB33D]" />
-              </div>
-              <div className="absolute -bottom-4 right-10 w-12 h-12 rounded-xl flex items-center justify-center border border-[rgba(255,255,255,0.08)] bg-[rgba(16,24,39,0.85)] backdrop-blur-md shadow-lg">
-                <FaDocker size={24} className="text-[#2496ED]" />
-              </div>
-              <div className="absolute -bottom-4 left-10 w-12 h-12 rounded-xl flex items-center justify-center border border-[rgba(255,255,255,0.08)] bg-[rgba(16,24,39,0.85)] backdrop-blur-md shadow-lg">
-                <FaGithub size={24} className="text-white" />
-              </div>
+
             </div>
           </motion.div>
 
