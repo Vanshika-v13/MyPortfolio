@@ -50,9 +50,9 @@ export default function Navbar() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
 
-      // Use actual navbar height as threshold — navbar is ~64px (py-5) or ~48px (py-3)
+      // Use actual navbar height as threshold
       // Add a 10px buffer so the active section changes as soon as it clears the navbar
-      const navbarHeight = window.scrollY > 20 ? 58 : 74;
+      const navbarHeight = 58;
 
       const sections = navItems.map(item => item.href.substring(1));
       let current = '';
@@ -89,14 +89,12 @@ export default function Navbar() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'py-3' : 'py-5'
-      }`}
+      className="fixed top-0 w-full z-50 transition-all duration-300 py-3"
       style={{
-        background: isScrolled ? 'rgba(5,11,20,0.65)' : 'transparent',
-        backdropFilter: isScrolled ? 'blur(20px)' : 'none',
-        WebkitBackdropFilter: isScrolled ? 'blur(20px)' : 'none',
-        borderBottom: isScrolled ? '1px solid rgba(255,255,255,0.06)' : '1px solid transparent',
+        background: 'rgba(5,11,20,0.65)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        borderBottom: '1px solid rgba(255,255,255,0.06)',
       }}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between">

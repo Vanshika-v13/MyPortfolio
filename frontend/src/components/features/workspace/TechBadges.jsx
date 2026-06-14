@@ -27,7 +27,7 @@ export const TechBadge = ({ icon, label, style, delay = 0, isActive }) => (
 export const DataLines = ({ isActive }) => {
   return (
     <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-      <svg className="w-full h-full" style={{ filter: 'drop-shadow(0 0 4px rgba(0,229,255,0.5))' }}>
+      <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none" style={{ filter: 'drop-shadow(0 0 4px rgba(0,229,255,0.5))' }}>
         <defs>
             <linearGradient id="lineGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="rgba(0,229,255,0)" />
@@ -44,7 +44,7 @@ export const DataLines = ({ isActive }) => {
         </defs>
 
         <motion.path 
-            d="M 12% 5% C 20% 5%, 30% 50%, 50% 80%" 
+            d="M 12 5 C 20 5, 30 50, 50 80" 
             fill="none" 
             stroke="url(#lineGrad1)" 
             strokeWidth="1.5"
@@ -54,7 +54,7 @@ export const DataLines = ({ isActive }) => {
             transition={{ duration: 1.5, delay: 0.5 }}
         />
         <motion.path 
-            d="M 2% 70% C 15% 70%, 30% 85%, 50% 80%" 
+            d="M 2 70 C 15 70, 30 85, 50 80" 
             fill="none" 
             stroke="url(#lineGrad1)" 
             strokeWidth="1.5"
@@ -64,7 +64,7 @@ export const DataLines = ({ isActive }) => {
             transition={{ duration: 1.5, delay: 0.7 }}
         />
         <motion.path 
-            d="M 80% 85% C 70% 85%, 60% 80%, 50% 80%" 
+            d="M 80 85 C 70 85, 60 80, 50 80" 
             fill="none" 
             stroke="url(#lineGrad1)" 
             strokeWidth="1.5"
