@@ -22,11 +22,12 @@ app.use(
   })
 );
 
-// Support one or more CLIENT_URL values (comma-separated) for dev flexibility
-const allowedOrigins = (process.env.CLIENT_URL || '')
-  .split(',')
-  .map((o) => o.trim())
-  .filter(Boolean);
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  process.env.FRONTEND_URL,
+  ...(process.env.CLIENT_URL ? process.env.CLIENT_URL.split(',').map((o) => o.trim()) : [])
+].filter(Boolean);
 
 const corsOptions = {
   origin(origin, callback) {
@@ -42,7 +43,7 @@ const corsOptions = {
     }
   },
   credentials: true,
-  methods: ['GET', 'POST', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   optionsSuccessStatus: 200, // some legacy browsers choke on 204
 };
