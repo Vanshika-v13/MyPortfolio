@@ -276,7 +276,7 @@ export default function Footer() {
         }} />
 
         {/* ── Bottom bar: copyright / scroll-top / micro-signature ── */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-0">
 
           {/* Left — copyright */}
           <p style={{ fontSize: '13px', color: '#6B7A90', lineHeight: 1 }}>

@@ -141,13 +141,13 @@ export default function Hero() {
             className="flex flex-col items-start space-y-6"
           >
             <div className="space-y-3">
-              <p className="text-xl md:text-2xl font-medium text-[#A0AEC0]">
+              <p className="text-[clamp(1.125rem,3vw,1.5rem)] font-medium text-[#A0AEC0]">
                 Hello, I'm
               </p>
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-[#FFFFFF]">
+              <h1 className="text-[clamp(2.5rem,8vw,4.5rem)] leading-[1.1] font-extrabold tracking-tight text-[#FFFFFF]">
                 Vanshika Verma
               </h1>
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#FFFFFF] h-[1.2em]">
+              <h2 className="text-[clamp(1.5rem,4vw,2.25rem)] font-bold text-[#FFFFFF] h-[1.2em]">
                 And I'm a <TypewriterRole />
               </h2>
             </div>
@@ -222,17 +222,17 @@ export default function Hero() {
               <div className="absolute top-[55%] -left-[10%]">{'()'}</div>
             </div>
 
-            <div className="relative flex items-center justify-center w-[440px] h-[440px]">
+            <div className="relative flex items-center justify-center w-full max-w-[440px] aspect-square mx-auto lg:mx-0">
               
               {/* Layer 5: Ultra-Subtle Outer Technical Ring (8-12% opacity, 1px stroke, no glow) */}
-              <svg className="absolute w-[440px] h-[440px] z-10 pointer-events-none opacity-[0.1]" viewBox="0 0 440 440">
+              <svg className="absolute w-full h-full z-10 pointer-events-none opacity-[0.1]" viewBox="0 0 440 440">
                 <circle cx="220" cy="220" r="204" fill="none" stroke="#00E5FF" strokeWidth="1" strokeDasharray="4 8 1 8" />
                 <circle cx="220" cy="220" r="208" fill="none" stroke="#1E4DFF" strokeWidth="1" strokeDasharray="2 20" />
                 <path d="M 220 12 L 220 16 M 220 424 L 220 428 M 12 220 L 16 220 M 424 220 L 428 220" stroke="#00E5FF" strokeWidth="1.5" />
               </svg>
 
               {/* Layer 4: Segmented animated arcs with gradient */}
-              <div className="absolute w-[440px] h-[440px] z-20 pointer-events-none">
+              <div className="absolute w-full h-full z-20 pointer-events-none">
                 <svg className="absolute inset-0 w-full h-full" viewBox="0 0 440 440">
                   <defs>
                     <linearGradient id="cyanToBlueRight" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -287,10 +287,10 @@ export default function Hero() {
               </div>
 
               {/* Layer 3: Controlled ambient glow */}
-              <div className="absolute w-[415px] h-[415px] bg-[#1E4DFF] rounded-full blur-[20px] opacity-[0.035] pointer-events-none z-20"></div>
+              <div className="absolute w-[94.3%] aspect-square bg-[#1E4DFF] rounded-full blur-[20px] opacity-[0.035] pointer-events-none z-20"></div>
               
               {/* Layer 2: Thin elegant border + Layer 1: Portrait image */}
-              <div className="relative w-[375px] h-[375px] rounded-full border-[2px] border-[#1E4DFF]/55 z-30 flex items-center justify-center bg-[#050B14]">
+              <div className="relative w-[85.2%] aspect-square rounded-full border-[2px] border-[#1E4DFF]/55 z-30 flex items-center justify-center bg-[#050B14]">
                 <div className="w-full h-full rounded-full overflow-hidden">
                   <img 
                     src="/images/profile.png.jpeg" 

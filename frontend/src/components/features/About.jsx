@@ -109,7 +109,7 @@ export default function About() {
             transition={{ duration: 0.4 }}
             className="text-center relative z-10"
           >
-            <h2 className="text-2xl md:text-4xl font-extrabold text-[#FFFFFF] tracking-tight mb-1 uppercase">
+            <h2 className="text-[clamp(1.5rem,4vw,2.25rem)] font-extrabold text-[#FFFFFF] tracking-tight mb-1 uppercase">
               ABOUT ME
             </h2>
             <p className="text-[#00E5FF] text-xs md:text-sm font-medium tracking-wide uppercase">
@@ -142,7 +142,7 @@ export default function About() {
               transition={{ duration: 0.5, ease: 'easeOut' }}
               className="mb-4"
             >
-              <h3 className="text-xl md:text-2xl font-[800] tracking-tight mb-1 text-[#E6F1FF]">
+              <h3 className="text-[clamp(1.25rem,3vw,1.5rem)] font-[800] tracking-tight mb-1 text-[#E6F1FF]">
                 WHO I AM
               </h3>
               <p className="text-[#A9B4C7] leading-[1.8] max-w-[600px] text-xs md:text-sm font-[400] mb-2">
@@ -210,7 +210,7 @@ export default function About() {
             </motion.div>
 
             {/* Stats Cards — enter from bottom with stagger, independent origin */}
-            <div className="grid grid-cols-4 gap-2 w-full max-w-[520px]">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 w-full max-w-[520px] mx-auto lg:mx-0">
               {stats.map((stat, i) => (
                 <motion.div
                   key={i}

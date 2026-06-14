@@ -62,7 +62,7 @@ export default function PortfolioShowcase() {
             initial={{ opacity: 0, y: 20 }}
             animate={isPlaying ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6 }}
-            className="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-[var(--color-text-primary)] mb-4 uppercase"
+            className="text-[clamp(1.875rem,5vw,3rem)] font-extrabold tracking-tight text-[var(--color-text-primary)] mb-4 uppercase"
           >
             Portfolio Showcase
           </motion.h2>

@@ -20,6 +20,17 @@ export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [mobileMenuOpen]);
+
   // Smart nav handler: scroll on homepage, navigate+state on project pages
   const handleNavClick = (item) => {
     if (item.external) return; // let Resume <a> handle itself
@@ -106,8 +117,8 @@ export default function Navbar() {
         </motion.div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-8">
-          <ul className="flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-4 lg:gap-8">
+          <ul className="flex items-center gap-4 lg:gap-8">
           {navItems.map((item, i) => {
               const sectionId = item.href.substring(1);
               const isActive = activeSection === sectionId;
@@ -170,7 +181,7 @@ export default function Navbar() {
         </nav>
 
         {/* Mobile Menu Button */}
-        <div className="flex items-center gap-4 lg:hidden">
+        <div className="flex items-center gap-4 md:hidden">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="p-2 -mr-2 text-[#A0AEC0] hover:text-[#FFFFFF] focus:outline-none transition-colors"
@@ -184,7 +195,7 @@ export default function Navbar() {
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
         <div 
-          className="lg:hidden absolute top-full left-0 w-full shadow-2xl"
+          className="md:hidden absolute top-full left-0 w-full shadow-2xl"
           style={{
             background: 'rgba(5,11,20,0.95)',
             backdropFilter: 'blur(20px)',

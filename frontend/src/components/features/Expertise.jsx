@@ -93,7 +93,7 @@ export default function Expertise() {
             transition={{ duration: 0.4 }}
             className="text-center relative z-10"
           >
-            <h2 className="text-2xl md:text-4xl font-extrabold text-[#FFFFFF] tracking-tight mb-1 uppercase">
+            <h2 className="text-[clamp(1.5rem,4vw,2.25rem)] font-extrabold text-[#FFFFFF] tracking-tight mb-1 uppercase">
               TECHNICAL EXPERTISE
             </h2>
             <p className="text-[#00E5FF] text-xs md:text-sm font-medium tracking-wide uppercase">
@@ -162,8 +162,8 @@ export default function Expertise() {
               className="hidden lg:block absolute bottom-0 left-1/2 w-px h-[16px] bg-[rgba(0,229,255,0.2)] -translate-x-1/2 z-0" 
             />
 
-            {/* Level 1: 3-Column Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 relative z-10">
+            {/* Level 1: Responsive Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 relative z-10">
               
               {/* Languages & Programming */}
               <motion.div variants={topCardVariants} className="w-full">

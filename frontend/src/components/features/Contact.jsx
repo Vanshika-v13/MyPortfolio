@@ -283,7 +283,7 @@ export default function Contact() {
             transition={{ duration: 0.4 }}
             className="text-center relative z-10"
           >
-            <h2 className="text-2xl md:text-4xl font-extrabold text-[#E6F1FF] tracking-tight mb-2 uppercase">
+            <h2 className="text-[clamp(1.5rem,4vw,2.25rem)] font-extrabold text-[#E6F1FF] tracking-tight mb-2 uppercase">
               CONTACT
             </h2>
             <p className="text-[#00E5FF] text-xs md:text-sm font-medium tracking-wide uppercase">
