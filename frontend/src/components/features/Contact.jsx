@@ -3,8 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useMutation } from '@tanstack/react-query';
 import { Mail, Phone, Send, CheckCircle2, AlertCircle } from 'lucide-react';
 import { FaLinkedin, FaGithub } from 'react-icons/fa';
+import { useSectionAnimation } from '../../hooks/useSectionAnimation';
 
 export default function Contact() {
+  const isPlaying = useSectionAnimation('contact');
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
   const [errors, setErrors] = useState({});
 
@@ -62,7 +64,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="relative min-h-[90vh] flex flex-col pt-24 pb-16 md:pt-32 md:pb-24 bg-[#050B14]" style={{ overflow: 'visible' }}>
+    <section id="contact" className="relative min-h-[90vh] flex flex-col pt-20 pb-16 md:pt-28 md:pb-24 bg-[#050B14]" style={{ overflow: 'visible' }}>
       <style>
         {`
           /* ── Input Fields ── */
@@ -277,8 +279,7 @@ export default function Contact() {
         <div className="relative flex justify-center mb-10 md:mb-14 w-full flex-shrink-0">
           <motion.div
             initial={{ opacity: 0, y: -15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            animate={isPlaying ? { opacity: 1, y: 0 } : { opacity: 0, y: -15 }}
             transition={{ duration: 0.4 }}
             className="text-center relative z-10"
           >
@@ -297,8 +298,7 @@ export default function Contact() {
           <div className="w-full lg:w-[60%] flex flex-col gap-4">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              animate={isPlaying ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.6 }}
               className="flex flex-col w-full"
             >
@@ -444,8 +444,7 @@ export default function Contact() {
           <div className="w-full lg:w-[40%] flex flex-col gap-4">
             <motion.div
               initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              animate={isPlaying ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
               transition={{ duration: 0.5 }}
             >
               <div className="mb-3">
@@ -468,8 +467,7 @@ export default function Contact() {
                     target={info.href.startsWith('http') ? '_blank' : undefined}
                     rel={info.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                     initial={{ opacity: 0, y: 15 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    animate={isPlaying ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
                     transition={{ duration: 0.4, delay: idx * 0.1 }}
                     className="contact-card flex items-center gap-4 px-4 py-3 rounded-xl group"
                   >
@@ -487,8 +485,7 @@ export default function Contact() {
               {/* CURRENT STATUS CARD */}
               <motion.div
                 initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                animate={isPlaying ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
                 transition={{ duration: 0.4, delay: 0.4 }}
                 className="contact-card p-4 rounded-2xl relative overflow-hidden"
                 style={{

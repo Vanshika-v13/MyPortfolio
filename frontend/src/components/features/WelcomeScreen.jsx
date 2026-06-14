@@ -154,9 +154,9 @@ export default function WelcomeScreen({ onEnter }) {
   };
 
   const links = [
-    { icon: <FaGithub className="w-4 h-4 md:w-5 md:h-5" />, href: "https://github.com" },
-    { icon: <FaLinkedin className="w-4 h-4 md:w-5 md:h-5" />, href: "https://linkedin.com" },
-    { icon: <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-[#00D4FF]" />, href: "mailto:contact@example.com" }
+    { icon: <FaGithub className="w-4 h-4 md:w-5 md:h-5" />, href: "https://github.com/Vanshika-v13" },
+    { icon: <FaLinkedin className="w-4 h-4 md:w-5 md:h-5" />, href: "https://www.linkedin.com/in/vanshika13/" },
+    { icon: <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-[#00D4FF]" />, href: "mailto:vanshikaverma1310@gmail.com" }
   ];
 
   return (
@@ -237,13 +237,13 @@ export default function WelcomeScreen({ onEnter }) {
                 className="flex flex-col items-center gap-8"
               >
                 <div className="flex flex-wrap items-center justify-center gap-3 text-[#A0AEC0] text-base md:text-xl font-medium tracking-wide">
-                  <span>MERN Stack Developer</span>
+                  <span>Full-Stack Engineer</span>
                   <span className="text-[#2D9CFF] text-2xl leading-none hidden md:inline">•</span>
                   <span className="text-[#2D9CFF] text-xl leading-none md:hidden">•</span>
-                  <span>Problem Solver</span>
+                  <span>AI-Driven Builder</span>
                   <span className="text-[#00D4FF] text-2xl leading-none hidden md:inline">•</span>
                   <span className="text-[#00D4FF] text-xl leading-none md:hidden">•</span>
-                  <span>Creative Builder</span>
+                  <span>Scalable Systems Architect</span>
                 </div>
 
                 <button

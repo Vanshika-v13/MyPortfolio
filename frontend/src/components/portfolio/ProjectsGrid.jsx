@@ -35,6 +35,7 @@ function ProjectCard({ project, index }) {
   const handleDetails = (e) => {
     e.stopPropagation();
     if (project.slug) {
+      sessionStorage.setItem("portfolioScrollPosition", window.scrollY.toString());
       navigate(`/project/${project.slug}`);
     }
   };

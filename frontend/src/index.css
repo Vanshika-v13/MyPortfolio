@@ -17,6 +17,11 @@
     scroll-behavior: smooth;
   }
 
+  section {
+    /* scroll-margin-top is NOT needed: all sections already have pt-20/pt-24/pt-28/pt-32
+       built-in padding-top that accounts for the fixed navbar height */
+    scroll-margin-top: 0;
+  }
 
   .dark {
     --color-bg: #09090B;

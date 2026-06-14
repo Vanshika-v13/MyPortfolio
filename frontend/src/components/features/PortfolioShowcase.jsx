@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSectionAnimation } from '../../hooks/useSectionAnimation';
 import ProjectsGrid from '../portfolio/ProjectsGrid';
 import CertificatesGrid from '../portfolio/CertificatesGrid';
 
@@ -10,6 +11,7 @@ const TABS = [
 
 export default function PortfolioShowcase() {
   const [activeTab, setActiveTab] = useState('projects');
+  const isPlaying = useSectionAnimation('portfolio');
 
   const handleKeyDown = (e, index) => {
     let nextIndex = index;
@@ -28,7 +30,7 @@ export default function PortfolioShowcase() {
   };
 
   return (
-    <section id="portfolio" className="relative min-h-[90vh] flex flex-col pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden bg-[#050B14]">
+    <section id="portfolio" className="relative min-h-[90vh] flex flex-col pt-20 pb-16 md:pt-28 md:pb-24 overflow-hidden bg-[#050B14]">
       
       {/* STRUCTURAL DEPTH BACKGROUND - CONNECTED TO HERO */}
       <div className="absolute inset-0 z-0 pointer-events-none bg-[#050B14] overflow-hidden">
@@ -58,8 +60,7 @@ export default function PortfolioShowcase() {
         <div className="max-w-3xl mx-auto text-center mb-10 md:mb-14 w-full flex-shrink-0 relative">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            animate={isPlaying ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6 }}
             className="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-[var(--color-text-primary)] mb-4 uppercase"
           >
@@ -67,8 +68,7 @@ export default function PortfolioShowcase() {
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            animate={isPlaying ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-[#00E5FF] text-xs md:text-sm font-medium tracking-wide uppercase"
           >

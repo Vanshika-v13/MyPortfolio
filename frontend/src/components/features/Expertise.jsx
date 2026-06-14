@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useSectionAnimation } from '../../hooks/useSectionAnimation';
 
 // External Icons (SimpleIcons via react-icons)
 import { FaJava, FaGithub, FaCss3Alt } from 'react-icons/fa';
@@ -16,11 +17,10 @@ import { Code2, Globe, Database, Wrench, ServerCog, Braces } from 'lucide-react'
 import ExpertiseCard from '../expertise/ExpertiseCard';
 import TechItem from '../expertise/TechItem';
 
-const Background = () => (
+const Background = ({ isPlaying }) => (
   <motion.div 
     initial={{ opacity: 0 }}
-    whileInView={{ opacity: 1 }}
-    viewport={{ once: true }}
+    animate={isPlaying ? { opacity: 1 } : { opacity: 0 }}
     transition={{ duration: 0.9, ease: "easeOut" }}
     className="absolute inset-0 pointer-events-none z-0 overflow-hidden bg-[#050B14]"
   >
@@ -49,40 +49,47 @@ const Background = () => (
 );
 
 export default function Expertise() {
+  const isPlaying = useSectionAnimation('expertise');
+
   const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.08,
-      }
-    }
+    hidden: {},
+    visible: {}
   };
 
-  const itemVariants = {
+  // Top Cards
+  const topCardVariants = {
     hidden: { opacity: 0, y: 15 },
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.5, ease: "easeOut" }
+      transition: { duration: 0.2, delay: 0.4, ease: "easeOut" }
+    }
+  };
+
+  // Bottom Card
+  const bottomCardVariants = {
+    hidden: { opacity: 0, y: 15 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.2, delay: 0.8, ease: "easeOut" }
     }
   };
 
   return (
     <section 
       id="expertise" 
-      className="relative w-full min-h-[90vh] bg-[#050B14] flex flex-col overflow-hidden pt-24 pb-16 md:pt-32 md:pb-24"
+      className="relative w-full min-h-[90vh] bg-[#050B14] flex flex-col overflow-hidden pt-20 pb-16 md:pt-28 md:pb-24"
     >
-      <Background />
+      <Background isPlaying={isPlaying} />
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 lg:px-8 flex flex-col items-center">
         
         {/* Section Header (Matching About & Projects) */}
-        <div className="relative flex justify-center mb-10 md:mb-14 w-full flex-shrink-0">
+        <div className="relative flex justify-center mb-2 md:mb-4 w-full flex-shrink-0">
           <motion.div
             initial={{ opacity: 0, y: -15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            animate={isPlaying ? { opacity: 1, y: 0 } : { opacity: 0, y: -15 }}
             transition={{ duration: 0.4 }}
             className="text-center relative z-10"
           >
@@ -99,29 +106,67 @@ export default function Expertise() {
         <motion.div 
           variants={containerVariants}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          className="flex flex-col items-center w-full max-w-5xl mx-auto relative z-10 mt-2"
+          animate={isPlaying ? "visible" : "hidden"}
+          className="flex flex-col items-center w-full max-w-5xl mx-auto relative z-10 -mt-2"
         >
           {/* Vertical Line Descending from Header */}
-          <div className="hidden lg:block w-px h-[24px] bg-gradient-to-b from-[rgba(0,229,255,0.4)] to-[rgba(0,229,255,0.15)] relative">
-            <div className="absolute bottom-0 left-1/2 w-[6px] h-[6px] rounded-full bg-[#00E5FF] shadow-[0_0_10px_rgba(0,229,255,1)] -translate-x-1/2 translate-y-[3px] z-20" />
+          <div className="hidden lg:flex flex-col items-center relative z-20">
+            {/* Top Node */}
+            <motion.div 
+              variants={{
+                hidden: { scale: 0, opacity: 0 },
+                visible: { scale: 1, opacity: 1, transition: { duration: 0.1, ease: "easeOut" } }
+              }}
+              className="w-[6px] h-[6px] rounded-full bg-[#00E5FF] shadow-[0_0_10px_rgba(0,229,255,1)] relative z-20 mb-[-3px]"
+            />
+            {/* Vertical Line */}
+            <motion.div 
+              variants={{
+                hidden: { scaleY: 0, opacity: 0, originY: 0 },
+                visible: { scaleY: 1, opacity: 1, transition: { duration: 0.15, delay: 0.1, ease: "easeInOut" } }
+              }}
+              className="w-px h-[24px] bg-gradient-to-b from-[rgba(0,229,255,0.4)] to-[rgba(0,229,255,0.15)] relative z-10"
+            />
           </div>
 
           <div className="w-full relative pt-[16px] pb-[16px]">
             {/* Top Tree Connections */}
-            <div className="hidden lg:block absolute top-0 left-[calc(16.666%-8px)] right-[calc(16.666%-8px)] h-[16px] border-t border-l border-r border-[rgba(0,229,255,0.2)] rounded-t-[12px] z-0" />
-            <div className="hidden lg:block absolute top-0 left-1/2 w-px h-[16px] bg-[rgba(0,229,255,0.2)] -translate-x-1/2 z-0" />
+            <motion.div 
+              variants={{
+                hidden: { clipPath: 'inset(0% 50% 0% 50%)', opacity: 0 },
+                visible: { clipPath: 'inset(0% 0% 0% 0%)', opacity: 1, transition: { duration: 0.15, delay: 0.25, ease: "easeInOut" } }
+              }}
+              className="hidden lg:block absolute top-0 left-[calc(16.666%-8px)] right-[calc(16.666%-8px)] h-[16px] border-t border-l border-r border-[rgba(0,229,255,0.2)] rounded-t-[12px] z-0" 
+            />
+            <motion.div 
+              variants={{
+                hidden: { scaleY: 0, opacity: 0, originY: 0 },
+                visible: { scaleY: 1, opacity: 1, transition: { duration: 0.15, delay: 0.25, ease: "easeInOut" } }
+              }}
+              className="hidden lg:block absolute top-0 left-1/2 w-px h-[16px] bg-[rgba(0,229,255,0.2)] -translate-x-1/2 z-0" 
+            />
 
             {/* Bottom Tree Connections */}
-            <div className="hidden lg:block absolute bottom-0 left-[calc(16.666%-8px)] right-[calc(16.666%-8px)] h-[16px] border-b border-l border-r border-[rgba(0,229,255,0.2)] rounded-b-[12px] z-0" />
-            <div className="hidden lg:block absolute bottom-0 left-1/2 w-px h-[16px] bg-[rgba(0,229,255,0.2)] -translate-x-1/2 z-0" />
+            <motion.div 
+              variants={{
+                hidden: { clipPath: 'inset(0% 50% 0% 50%)', opacity: 0 },
+                visible: { clipPath: 'inset(0% 0% 0% 0%)', opacity: 1, transition: { duration: 0.1, delay: 0.6, ease: "easeInOut" } }
+              }}
+              className="hidden lg:block absolute bottom-0 left-[calc(16.666%-8px)] right-[calc(16.666%-8px)] h-[16px] border-b border-l border-r border-[rgba(0,229,255,0.2)] rounded-b-[12px] z-0" 
+            />
+            <motion.div 
+              variants={{
+                hidden: { scaleY: 0, opacity: 0, originY: 1 },
+                visible: { scaleY: 1, opacity: 1, transition: { duration: 0.1, delay: 0.6, ease: "easeInOut" } }
+              }}
+              className="hidden lg:block absolute bottom-0 left-1/2 w-px h-[16px] bg-[rgba(0,229,255,0.2)] -translate-x-1/2 z-0" 
+            />
 
             {/* Level 1: 3-Column Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 relative z-10">
               
               {/* Languages & Programming */}
-              <motion.div variants={itemVariants} className="w-full">
+              <motion.div variants={topCardVariants} className="w-full">
                 <ExpertiseCard title="Languages & Programming" icon={<Code2 className="w-4 h-4" />}>
                   <div className="grid grid-cols-2 gap-2">
                     <TechItem icon={SiC} name="C" iconColor="#A8B9CC" />
@@ -136,7 +181,7 @@ export default function Expertise() {
               </motion.div>
 
               {/* Web Development */}
-              <motion.div variants={itemVariants} className="w-full">
+              <motion.div variants={topCardVariants} className="w-full">
                 <ExpertiseCard title="Web Development" icon={<Globe className="w-4 h-4" />}>
                   <div className="grid grid-cols-2 gap-2">
                     <TechItem icon={SiReact} name="React" iconColor="#61DAFB" />
@@ -150,7 +195,7 @@ export default function Expertise() {
               </motion.div>
 
               {/* Databases & Backend */}
-              <motion.div variants={itemVariants} className="w-full">
+              <motion.div variants={topCardVariants} className="w-full">
                 <ExpertiseCard title="Databases & Backend" icon={<Database className="w-4 h-4" />}>
                   <div className="grid grid-cols-2 gap-2">
                     <TechItem icon={SiMongodb} name="MongoDB" iconColor="#47A248" />
@@ -166,13 +211,19 @@ export default function Expertise() {
           </div>
 
           {/* Vertical Line Descending to Level 2 */}
-          <div className="hidden lg:block w-px h-[24px] bg-gradient-to-t from-[rgba(0,229,255,0.4)] to-[rgba(0,229,255,0.2)] relative">
+          <motion.div 
+            variants={{
+              hidden: { scaleY: 0, opacity: 0, originY: 0 },
+              visible: { scaleY: 1, opacity: 1, transition: { duration: 0.1, delay: 0.7, ease: "easeInOut" } }
+            }}
+            className="hidden lg:flex flex-col items-center relative z-20 w-px h-[24px] bg-gradient-to-t from-[rgba(0,229,255,0.4)] to-[rgba(0,229,255,0.2)]"
+          >
             <div className="absolute top-0 left-1/2 w-[6px] h-[6px] rounded-full bg-[#00E5FF] shadow-[0_0_10px_rgba(0,229,255,1)] -translate-x-1/2 -translate-y-[3px] z-20" />
-          </div>
+          </motion.div>
 
           {/* Level 2: Systems & Tools */}
           <div className="w-full lg:w-[65%] relative z-10">
-            <motion.div variants={itemVariants} className="w-full relative z-10">
+            <motion.div variants={bottomCardVariants} className="w-full relative z-10">
               <ExpertiseCard title="Systems & Tools" icon={<Wrench className="w-4 h-4" />} className="!py-3">
                 <div className="flex flex-wrap justify-center gap-2">
                   <TechItem icon={SiGit} name="Git" iconColor="#F05032" />

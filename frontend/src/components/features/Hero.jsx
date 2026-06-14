@@ -163,9 +163,9 @@ export default function Hero() {
               className="flex items-center gap-4 pt-4"
             >
               {[
-                { icon: <FaGithub size={20} />, href: "https://github.com" },
-                { icon: <FaLinkedin size={20} />, href: "https://linkedin.com" },
-                { icon: <FaEnvelope size={20} />, href: "mailto:contact@example.com" }
+                { icon: <FaGithub size={20} />, href: "https://github.com/Vanshika-v13" },
+                { icon: <FaLinkedin size={20} />, href: "https://www.linkedin.com/in/vanshika13/" },
+                { icon: <FaEnvelope size={20} />, href: "mailto:vanshikaverma1310@gmail.com" }
               ].map((social, i) => (
                 <a
                   key={i}

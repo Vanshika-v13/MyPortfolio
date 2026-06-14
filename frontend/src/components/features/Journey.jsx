@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useSectionAnimation } from '../../hooks/useSectionAnimation';
 
 const leftCards = [
   {
@@ -27,15 +28,17 @@ const leftCards = [
 ];
 
 const rightCards = [
-  { title: "Academic Excellence", value: "9.29 CGPA" },
-  { title: "Project Development", value: "Full-Stack Applications" },
-  { title: "Problem Solving", value: "Algorithmic Logic" },
-  { title: "Continuous Learning", value: "Adaptable & Driven" },
+  { title: "Academic Excellence", value: "Consistent High Performance · 9.29 CGPA" },
+  { title: "Product Engineering", value: "Scalable AI-Driven Web Solutions" },
+  { title: "Computational Thinking", value: "Advanced Problem Solving & Optimization" },
+  { title: "Continuous Evolution", value: "Fast Learner · Adaptive · Innovation Focused" },
 ];
 
 export default function Journey() {
+  const isPlaying = useSectionAnimation('journey');
+
   return (
-    <section id="journey" className="relative min-h-[90vh] flex flex-col pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden bg-[#050B14]">
+    <section id="journey" className="relative min-h-[90vh] flex flex-col pt-20 pb-16 md:pt-28 md:pb-24 overflow-hidden bg-[#050B14]">
       <style>
         {`
           .journey-card {
@@ -68,8 +71,7 @@ export default function Journey() {
         <div className="relative flex justify-center mb-10 md:mb-14 w-full flex-shrink-0">
           <motion.div
             initial={{ opacity: 0, y: -15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            animate={isPlaying ? { opacity: 1, y: 0 } : { opacity: 0, y: -15 }}
             transition={{ duration: 0.4 }}
             className="text-center relative z-10"
           >
@@ -90,8 +92,7 @@ export default function Journey() {
               <motion.div 
                 key={idx}
                 initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                animate={isPlaying ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: idx * 0.15 }}
                 className="journey-card relative px-6 py-5 md:px-8 md:py-6 rounded-2xl"
               >
@@ -128,8 +129,7 @@ export default function Journey() {
           <div className="w-full lg:w-[35%] flex flex-col gap-5">
             <motion.div
               initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              animate={isPlaying ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
               transition={{ duration: 0.5 }}
             >
               <div className="mb-6">
@@ -146,8 +146,7 @@ export default function Journey() {
                   <motion.div
                     key={idx}
                     initial={{ opacity: 0, y: 15 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    animate={isPlaying ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
                     transition={{ duration: 0.4, delay: idx * 0.1 }}
                     className="journey-card relative p-5 rounded-xl flex flex-col justify-center"
                   >

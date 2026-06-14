@@ -209,9 +209,9 @@ export default function ProjectDetails() {
             animate="visible"
           >
             <button 
-              onClick={() => navigate(-1)} 
+              onClick={() => navigate('/')} 
               className="pd-back" 
-              aria-label="Go back"
+              aria-label="Back to Projects"
             >
               <ArrowLeft size={14} />
               Back to Projects

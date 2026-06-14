@@ -1,5 +1,5 @@
 import React, { Suspense, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from './context/ThemeContext';
@@ -29,12 +29,30 @@ const SectionFallback = () => (
   </div>
 );
 
+if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
+  window.history.scrollRestoration = 'manual';
+}
+
 function MainLayout() {
   const [hasEntered, setHasEntered] = useState(
     () => sessionStorage.getItem('hasSeenWelcome') === 'true'
   );
 
+  const location = useLocation();
+
   React.useLayoutEffect(() => {
+    // Restore exact scroll position
+    const savedPosition = sessionStorage.getItem("portfolioScrollPosition");
+    if (savedPosition) {
+      window.scrollTo({
+        top: Number(savedPosition),
+        behavior: "instant"
+      });
+      sessionStorage.removeItem("portfolioScrollPosition");
+      return;
+    }
+
+    // Handle direct hash links in URL
     if (hasEntered && window.location.hash) {
       const id = window.location.hash.substring(1);
       const element = document.getElementById(id);
@@ -42,7 +60,7 @@ function MainLayout() {
         element.scrollIntoView({ behavior: 'instant' });
       }
     }
-  }, [hasEntered]);
+  }, [hasEntered, location.pathname, location.hash]);
 
   return (
     <div className="min-h-screen w-full relative">
