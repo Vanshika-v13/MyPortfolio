@@ -28,7 +28,7 @@ export default function PortfolioShowcase() {
   };
 
   return (
-    <section id="portfolio" className="relative min-h-screen pt-4 pb-24 md:pt-10 md:pb-32 overflow-hidden bg-[#050B14]">
+    <section id="portfolio" className="relative min-h-[90vh] flex flex-col pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden bg-[#050B14]">
       
       {/* STRUCTURAL DEPTH BACKGROUND - CONNECTED TO HERO */}
       <div className="absolute inset-0 z-0 pointer-events-none bg-[#050B14] overflow-hidden">
@@ -52,10 +52,10 @@ export default function PortfolioShowcase() {
         <div className="absolute top-[30%] left-[-20%] w-[140%] h-[40%] bg-[#071425] transform rotate-[15deg] opacity-60 mix-blend-overlay border-y border-white/[0.01]"></div>
       </div>
 
-      <div className="relative z-20 w-full max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="relative z-20 w-full max-w-7xl mx-auto px-6 lg:px-8 flex flex-col flex-grow">
         
         {/* Section Header */}
-        <div className="max-w-3xl mx-auto text-center mb-10 md:mb-16">
+        <div className="max-w-3xl mx-auto text-center mb-10 md:mb-14 w-full flex-shrink-0 relative">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

@@ -14,14 +14,14 @@ import Hero from './components/features/Hero';
 import About from './components/features/About';
 import PortfolioShowcase from './components/features/PortfolioShowcase';
 import Expertise from './components/features/Expertise';
+import Journey from './components/features/Journey';
+import Contact from './components/features/Contact';
+import Footer from './components/layout/Footer';
 import SEO from './components/common/SEO';
 
-// Lazy load non-critical routes and below-the-fold sections
+// Lazy load non-critical routes
 const NotFound = React.lazy(() => import('./pages/NotFound'));
 const ProjectDetails = React.lazy(() => import('./pages/ProjectDetails'));
-const Journey = React.lazy(() => import('./components/features/Journey'));
-const Contact = React.lazy(() => import('./components/features/Contact'));
-const Footer = React.lazy(() => import('./components/layout/Footer'));
 
 const SectionFallback = () => (
   <div className="w-full min-h-[300px] flex items-center justify-center">
@@ -34,6 +34,16 @@ function MainLayout() {
     () => sessionStorage.getItem('hasSeenWelcome') === 'true'
   );
 
+  React.useLayoutEffect(() => {
+    if (hasEntered && window.location.hash) {
+      const id = window.location.hash.substring(1);
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'instant' });
+      }
+    }
+  }, [hasEntered]);
+
   return (
     <div className="min-h-screen w-full relative">
       <SEO />
@@ -44,14 +54,10 @@ function MainLayout() {
         <About />
         <PortfolioShowcase />
         <Expertise />
-        <Suspense fallback={<SectionFallback />}>
-          <Journey />
-          <Contact />
-        </Suspense>
+        <Journey />
+        <Contact />
       </main>
-      <Suspense fallback={<SectionFallback />}>
-        <Footer />
-      </Suspense>
+      <Footer />
       <ScrollControls />
     </div>
   );

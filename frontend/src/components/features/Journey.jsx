@@ -35,7 +35,7 @@ const rightCards = [
 
 export default function Journey() {
   return (
-    <section id="journey" className="relative py-24 min-h-[90vh] flex items-center justify-center overflow-hidden bg-[#050B14]">
+    <section id="journey" className="relative min-h-[90vh] flex flex-col pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden bg-[#050B14]">
       <style>
         {`
           .journey-card {
@@ -62,10 +62,10 @@ export default function Journey() {
       {/* Center Depth Glow */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,229,255,0.03)_0%,transparent_100%)] z-0 pointer-events-none"></div>
 
-      <div className="relative w-full max-w-7xl mx-auto px-6 lg:px-8 z-10 flex flex-col pt-4 pb-4">
+      <div className="relative w-full max-w-7xl mx-auto px-6 lg:px-8 z-10 flex flex-col flex-grow">
         
         {/* Section Header */}
-        <div className="relative flex justify-center mb-16 md:mb-20 w-full flex-shrink-0 -mt-16 md:-mt-20">
+        <div className="relative flex justify-center mb-10 md:mb-14 w-full flex-shrink-0">
           <motion.div
             initial={{ opacity: 0, y: -15 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -73,7 +73,7 @@ export default function Journey() {
             transition={{ duration: 0.4 }}
             className="text-center relative z-10"
           >
-            <h2 className="text-2xl md:text-4xl font-extrabold text-[#E6F1FF] tracking-tight mb-4 uppercase">
+            <h2 className="text-2xl md:text-4xl font-extrabold text-[#E6F1FF] tracking-tight mb-3 uppercase">
               PROFESSIONAL JOURNEY
             </h2>
             <p className="text-[#00E5FF] text-xs md:text-sm font-medium tracking-wide uppercase">

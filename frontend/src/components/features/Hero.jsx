@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaEnvelope, FaReact, FaNodeJs, FaDocker } from 'react-icons/fa';
 import { SiMongodb } from 'react-icons/si';
+import { ChevronDown } from 'lucide-react';
 import heroImage from '../../assets/myPhoto_.jpeg';
 
 const TypewriterRole = () => {
@@ -275,6 +276,27 @@ export default function Hero() {
 
         </div>
       </div>
+
+      {/* Minimal Scroll Down Button */}
+      <motion.div 
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1, duration: 0.5 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 hidden md:block"
+      >
+        <button
+          onClick={() => {
+            const aboutSection = document.getElementById('about');
+            if (aboutSection) {
+              aboutSection.scrollIntoView({ behavior: 'smooth' });
+            }
+          }}
+          className="text-[#A9B4C7] hover:text-[#00E5FF] transition-colors duration-300 focus:outline-none p-2 animate-bounce hover:animate-none"
+          aria-label="Scroll to About Section"
+        >
+          <ChevronDown className="w-6 h-6" strokeWidth={1.5} />
+        </button>
+      </motion.div>
     </section>
   );
 }

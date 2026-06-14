@@ -108,12 +108,14 @@ const FlowFieldLines = () => {
 };
 
 export default function WelcomeScreen({ onEnter }) {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(() => {
+    return sessionStorage.getItem('hasSeenWelcome') !== 'true';
+  });
 
   useEffect(() => {
     // Check if user has already seen the welcome screen this session
     const hasSeenWelcome = sessionStorage.getItem('hasSeenWelcome');
-    if (hasSeenWelcome) {
+    if (hasSeenWelcome && isVisible) {
       setIsVisible(false);
       if (onEnter) onEnter();
     }

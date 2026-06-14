@@ -14,11 +14,9 @@
   html,
   body {
     overflow-x: hidden; /* Prevent horizontal scroll from off-canvas atmospheric layers */
+    scroll-behavior: smooth;
   }
 
-  section[id] {
-    scroll-margin-top: 80px;
-  }
 
   .dark {
     --color-bg: #09090B;

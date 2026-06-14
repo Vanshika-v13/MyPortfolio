@@ -62,7 +62,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="relative py-10 min-h-screen md:min-h-[90vh] flex items-center justify-center bg-[#050B14]" style={{ overflow: 'visible' }}>
+    <section id="contact" className="relative min-h-[90vh] flex flex-col pt-24 pb-16 md:pt-32 md:pb-24 bg-[#050B14]" style={{ overflow: 'visible' }}>
       <style>
         {`
           /* ── Input Fields ── */
@@ -271,10 +271,10 @@ export default function Contact() {
       </svg>
 
       {/* ── Content Wrapper ── */}
-      <div className="relative w-full max-w-7xl mx-auto px-6 lg:px-8 z-10 flex flex-col pt-2 pb-2">
+      <div className="relative w-full max-w-7xl mx-auto px-6 lg:px-8 z-10 flex flex-col flex-grow">
         
         {/* Section Header */}
-        <div className="relative flex justify-center mb-6 w-full flex-shrink-0 -mt-4 md:-mt-6">
+        <div className="relative flex justify-center mb-10 md:mb-14 w-full flex-shrink-0">
           <motion.div
             initial={{ opacity: 0, y: -15 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -282,7 +282,7 @@ export default function Contact() {
             transition={{ duration: 0.4 }}
             className="text-center relative z-10"
           >
-            <h2 className="text-2xl md:text-4xl font-extrabold text-[#E6F1FF] tracking-tight mb-3 uppercase">
+            <h2 className="text-2xl md:text-4xl font-extrabold text-[#E6F1FF] tracking-tight mb-2 uppercase">
               CONTACT
             </h2>
             <p className="text-[#00E5FF] text-xs md:text-sm font-medium tracking-wide uppercase">

@@ -71,14 +71,14 @@ export default function Expertise() {
   return (
     <section 
       id="expertise" 
-      className="relative w-full min-h-[90vh] bg-[#050B14] flex flex-col justify-center py-16 lg:py-24 overflow-hidden"
+      className="relative w-full min-h-[90vh] bg-[#050B14] flex flex-col overflow-hidden pt-24 pb-16 md:pt-32 md:pb-24"
     >
       <Background />
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 lg:px-8 flex flex-col items-center">
         
         {/* Section Header (Matching About & Projects) */}
-        <div className="relative flex justify-center mb-6 w-full flex-shrink-0">
+        <div className="relative flex justify-center mb-10 md:mb-14 w-full flex-shrink-0">
           <motion.div
             initial={{ opacity: 0, y: -15 }}
             whileInView={{ opacity: 1, y: 0 }}
