@@ -13,6 +13,7 @@ const queryClient = new QueryClient();
 import Hero from './components/features/Hero';
 import About from './components/features/About';
 import PortfolioShowcase from './components/features/PortfolioShowcase';
+import Achievements from './components/features/Achievements';
 import Expertise from './components/features/Expertise';
 import Journey from './components/features/Journey';
 import Contact from './components/features/Contact';
@@ -89,6 +90,7 @@ function MainLayout() {
         <Hero key={`hero-${hasEntered}`} />
         <About />
         <PortfolioShowcase />
+        <Achievements />
         <Expertise />
         <Journey />
         <Contact />

@@ -16,6 +16,8 @@ function CertificateSkeleton() {
 }
 
 function CertificateOverlay({ certificate, onClose }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => {
@@ -86,9 +88,22 @@ function CertificateOverlay({ certificate, onClose }) {
               {certificate.title}
             </h3>
             {certificate.description && (
-              <p className="text-xs lg:text-sm text-[#A9B4C7] leading-relaxed line-clamp-3">
-                {certificate.description}
-              </p>
+              <div className="relative">
+                <p 
+                  className={`text-xs lg:text-sm text-[#A9B4C7] leading-relaxed transition-all duration-300 ${!isExpanded ? 'line-clamp-3 cursor-pointer' : ''}`}
+                  onClick={() => setIsExpanded(true)}
+                >
+                  {certificate.description}
+                </p>
+                {certificate.description.length > 100 && (
+                  <button 
+                    onClick={() => setIsExpanded(!isExpanded)}
+                    className="text-[10px] text-[#00E5FF] hover:text-[#E6F1FF] mt-1.5 font-bold uppercase tracking-wider transition-colors"
+                  >
+                    {isExpanded ? 'Show Less' : 'Read More'}
+                  </button>
+                )}
+              </div>
             )}
           </div>
 
