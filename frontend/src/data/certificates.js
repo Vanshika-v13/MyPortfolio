@@ -71,5 +71,28 @@ export const certificatesData = [
         ],
         "status": "BACKEND CERTIFIED",
         "level": "Professional"
+    },
+    {
+        "_id": "6a2d4934eee06477b165022e",
+        "title": "Employability Skill Training Programme",
+        "issuer": "Mahindra Pride Classroom (Naandi Foundation)",
+        "issueDate": "2026-01-01T00:00:00.000Z",
+        "credentialUrl": "",
+        "thumbnail": "/certificates/employbilitySkillTraining.jpeg",
+        "description": "Successfully completed the Employability Skill Training Programme conducted by Mahindra Pride Classroom in collaboration with Naandi Foundation. The program focused on professional communication, aptitude development, workplace readiness, interview preparation, teamwork, problem-solving, and industry-oriented employability skills to enhance career readiness and professional growth.",
+        "skills": [
+            "Communication Skills",
+            "Professional Development",
+            "Interview Preparation",
+            "Problem Solving",
+            "Team Collaboration",
+            "Workplace Readiness",
+            "Career Development",
+            "Aptitude Training",
+            "Soft Skills",
+            "Employability Skills"
+        ],
+        "status": "EMPLOYABILITY SKILLS CERTIFIED",
+        "level": "Professional"
     }
 ];
