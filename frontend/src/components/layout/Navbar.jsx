@@ -22,14 +22,7 @@ export default function Navbar() {
   const location = useLocation();
 
   useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
+    return () => {};
   }, [mobileMenuOpen]);
 
   // Smart nav handler: scroll on homepage, navigate+state on project pages

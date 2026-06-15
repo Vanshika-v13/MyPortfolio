@@ -69,11 +69,11 @@ const TypewriterRole = () => {
 const AmbientParticles = () => {
   const particles = ['<>', '{}', '[]', '()'];
   
-  // Static array of particle config
+  // Limit positions to 0–88% max so animated offsets can't push particles outside the section
   const particleConfigs = Array.from({ length: 15 }).map((_, i) => ({
     text: particles[i % particles.length],
-    top: `${Math.random() * 100}%`,
-    left: `${Math.random() * 100}%`,
+    top: `${Math.random() * 88}%`,
+    left: `${Math.random() * 88}%`,
     rotation: Math.random() * 90 - 45,
     scale: Math.random() * 0.4 + 0.6,
   }));
@@ -110,7 +110,16 @@ export default function Hero() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section id="home" className="relative min-h-screen pt-24 pb-16 lg:pt-32 lg:pb-24 flex items-center bg-[#050B14] overflow-hidden">
+    <section
+      id="home"
+      className="relative flex items-center bg-[#050B14] overflow-hidden"
+      style={{
+        minHeight: '100dvh',
+        paddingTop: 'clamp(5rem, 8vw, 8rem)',
+        paddingBottom: 'clamp(3rem, 5vw, 6rem)',
+        maxWidth: '100vw',
+      }}
+    >
       
       {/* Aurora Blueprint Grid Background */}
       <div className="absolute inset-0 z-0" 

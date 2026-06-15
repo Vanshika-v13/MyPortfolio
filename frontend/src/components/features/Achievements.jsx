@@ -185,19 +185,23 @@ const Achievements = () => {
     >
       {/* ── Organic Atmospheric Background System ── */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        {/* 1. Base Layer: Deep Navy */}
+        {/* 1. Layered Dark Depth (Base, Middle, Surface Lift) */}
         <div className="absolute inset-0 bg-[#050B14]"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#08111D] via-transparent to-[#0B1623] opacity-90"></div>
 
-        {/* 2. Surface Depth Layer: Large faint center lift for subtle section separation */}
+        {/* 5. Center atmospheric depth layer */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-[80%] h-[80%] bg-[#091526] rounded-[100%] blur-[180px] opacity-80"></div>
+          <div className="w-[70%] h-[70%] bg-[#0B1623] rounded-[100%] blur-[220px]"></div>
         </div>
 
-        {/* 3. Left Directional Lighting: Soft blue environmental glow behind text block */}
-        <div className="absolute top-[20%] left-[0%] w-[45%] h-[60%] bg-[#1E4DFF] rounded-[100%] blur-[150px] opacity-[0.08] mix-blend-screen"></div>
+        {/* 2. Subtle orbital atmosphere (behind whole card cluster) */}
+        <div className="absolute top-1/2 right-[5%] -translate-y-1/2 w-[60%] h-[70%] bg-[#0E7490] rounded-[100%] blur-[180px] opacity-[0.10]"></div>
 
-        {/* 4. Right Surface Depth: Subtle cyan reflected light behind card cluster for visible contrast */}
-        <div className="absolute top-[10%] right-[0%] w-[55%] h-[80%] bg-[#00E5FF] rounded-[100%] blur-[160px] opacity-[0.06] mix-blend-screen"></div>
+        {/* 3. Left-side directional light (behind text) */}
+        <div className="absolute top-[25%] left-[-5%] w-[45%] h-[50%] bg-[#1E4DFF] rounded-[100%] blur-[180px] opacity-[0.06]"></div>
+
+        {/* 4. Right-side environmental bounce light (behind achievement cards) */}
+        <div className="absolute top-[15%] right-[-5%] w-[50%] h-[70%] bg-[#00E5FF] rounded-[100%] blur-[200px] opacity-[0.05]"></div>
       </div>
 
       {/* ── Content ── */}

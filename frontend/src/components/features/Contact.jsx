@@ -5,6 +5,11 @@ import { Mail, Phone, Send, CheckCircle2, AlertCircle } from 'lucide-react';
 import { FaLinkedin, FaGithub } from 'react-icons/fa';
 import { useSectionAnimation } from '../../hooks/useSectionAnimation';
 
+// Use the deployed backend URL in production; fall back to the Vite dev-proxy relative path locally
+const API_CONTACT_URL = import.meta.env.VITE_API_URL
+  ? `${import.meta.env.VITE_API_URL}/contact`
+  : '/api/v1/contact';
+
 export default function Contact() {
   const isPlaying = useSectionAnimation('contact');
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
@@ -25,19 +30,41 @@ export default function Contact() {
 
   const mutation = useMutation({
     mutationFn: async (data) => {
-      const response = await fetch('/api/v1/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
+      let response;
+      try {
+        response = await fetch(API_CONTACT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+      } catch (networkErr) {
+        // Network-level failure (CORS, server down, no internet)
+        console.error('[Contact] Network error:', networkErr);
+        const err = new Error('Unable to reach the server. Please check your connection or try again later.');
+        err.status = 0;
+        err.isNetwork = true;
+        throw err;
+      }
 
-      const json = await response.json();
+      let json;
+      try {
+        json = await response.json();
+      } catch {
+        json = {};
+      }
+
+      console.log(`[Contact] POST ${API_CONTACT_URL} → ${response.status}`, json);
 
       if (!response.ok) {
-        // Attach server response to the error so we can display it
-        const err = new Error(json?.message || 'Submission failed');
+        // Build a descriptive message from the server response
+        let message = json?.message || 'Submission failed';
+        // If server returned field-level validation errors, surface the first one
+        if (!message && Array.isArray(json?.errors) && json.errors.length > 0) {
+          message = json.errors[0]?.message || 'Validation error';
+        }
+        const err = new Error(message);
         err.status = response.status;
-        err.serverErrors = json?.errors || null;
+        err.serverErrors = Array.isArray(json?.errors) ? json.errors : null;
         throw err;
       }
 
@@ -46,7 +73,10 @@ export default function Contact() {
     onSuccess: () => {
       setFormData({ name: '', email: '', phone: '', message: '' });
       setErrors({});
-    }
+    },
+    onError: (err) => {
+      console.error('[Contact] Mutation error:', err);
+    },
   });
 
   const handleSubmit = (e) => {
@@ -419,8 +449,10 @@ export default function Contact() {
                           <p className="text-sm font-medium">
                             {mutation.error?.status === 429
                               ? 'Too many requests. Please wait a moment before trying again.'
-                              : mutation.error?.status === 400
-                              ? 'Please check your inputs and try again.'
+                              : mutation.error?.isNetwork
+                              ? mutation.error.message
+                              : mutation.error?.message && mutation.error.message !== 'Submission failed'
+                              ? mutation.error.message
                               : 'Something went wrong. Please try again or reach out directly via email.'}
                           </p>
                         </div>

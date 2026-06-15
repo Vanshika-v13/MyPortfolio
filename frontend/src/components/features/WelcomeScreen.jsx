@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { lockScroll, unlockScroll } from '../../utils/scrollLock';
 
 const TypewriterText = () => {
   const words = "Welcome to My Digital Space".split(" ");
@@ -119,18 +120,17 @@ export default function WelcomeScreen({ onEnter }) {
       setIsVisible(false);
       if (onEnter) onEnter();
     }
-    
-    // Prevent scrolling while welcome screen is active
-    if (isVisible) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
   }, [isVisible, onEnter]);
+
+  useEffect(() => {
+    if (isVisible) {
+      lockScroll();
+    }
+
+    return () => {
+      unlockScroll();
+    };
+  }, [isVisible]);
 
   const handleEnterClick = () => {
     sessionStorage.setItem('hasSeenWelcome', 'true');

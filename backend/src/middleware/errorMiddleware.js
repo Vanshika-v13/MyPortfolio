@@ -9,6 +9,7 @@ const errorMiddleware = (err, req, res, next) => {
 
     return res.status(400).json({
       success: false,
+      message: 'Validation failed',
       errors,
     });
   }
@@ -27,12 +28,13 @@ const errorMiddleware = (err, req, res, next) => {
   if (err.errors) {
     return res.status(statusCode).json({
       success: false,
+      message: message || 'Validation failed',
       errors: err.errors,
     });
   }
 
-  if (!isOperational && process.env.NODE_ENV === 'development') {
-    console.error(err);
+  if (!isOperational) {
+    console.error('[Server Error]', err);
   }
 
   res.status(statusCode).json({
