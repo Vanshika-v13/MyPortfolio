@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Award, ExternalLink, X } from 'lucide-react';
-import { useCertificates } from '../../hooks/usePortfolioData';
+import { certificatesData as certificates } from '../../data/certificates';
 
 function CertificateSkeleton() {
   return (
@@ -183,7 +183,6 @@ function CertificateCard({ certificate, onClick }) {
 }
 
 export default function CertificatesGrid() {
-  const { data: certificates, isLoading, isError } = useCertificates();
   const [selectedId, setSelectedId] = useState(null);
 
   const sortedCertificates = useMemo(() => {
@@ -203,15 +202,7 @@ export default function CertificatesGrid() {
     });
   }, [certificates]);
 
-  if (isLoading) {
-    return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {[1, 2, 3].map(i => <CertificateSkeleton key={i} />)}
-      </div>
-    );
-  }
-
-  if (isError || !certificates || certificates.length === 0) {
+  if (!certificates || certificates.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center px-4 rounded-xl border border-dashed border-[rgba(0,229,255,0.12)] bg-[#071425]">
         <p className="text-sm text-[#6B7A90] font-medium">

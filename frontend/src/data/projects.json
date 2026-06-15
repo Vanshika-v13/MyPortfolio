@@ -1,0 +1,171 @@
+[
+  {
+    "_id": "6a2d4934eee06477b1650226",
+    "title": "Portfolio Platform",
+    "slug": "portfolio-platform",
+    "shortDescription": "A full-stack developer portfolio with dynamic content and a premium UI.",
+    "fullDescription": "A production-ready portfolio platform built with a React frontend and Node.js API. It showcases projects, certificates, and professional experience with optimized performance, SEO-friendly routing, and a modular content architecture.",
+    "thumbnail": "/images/projects/portfolio-platform-thumb.jpg",
+    "techStack": [
+      "React",
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "Tailwind CSS"
+    ],
+    "githubUrl": "https://github.com/example/portfolio-platform",
+    "liveDemoUrl": "https://portfolio.example.com",
+    "features": [
+      "Dynamic project and certificate sections",
+      "Responsive, accessible layout",
+      "REST API with versioned endpoints",
+      "Optimized image gallery and lazy loading"
+    ],
+    "architecture": "Monorepo-style separation with a React SPA consuming a versioned Express REST API. MongoDB stores structured portfolio content; the frontend uses route-based code splitting and shared design tokens.",
+    "challenges": [
+      "Designing a flexible schema for rich project case studies",
+      "Balancing SEO needs with a client-rendered SPA",
+      "Keeping API responses consistent across modules"
+    ],
+    "learnings": [
+      "Schema design upfront reduces refactor cost later",
+      "Consistent API response envelopes simplify frontend error handling",
+      "Featured sorting at the query layer keeps list views predictable"
+    ],
+    "galleryImages": [
+      "/images/projects/portfolio-platform-1.jpg",
+      "/images/projects/portfolio-platform-2.jpg",
+      "/images/projects/portfolio-platform-3.jpg"
+    ],
+    "featured": true,
+    "__v": 0,
+    "createdAt": "2026-06-13T12:12:36.823Z",
+    "updatedAt": "2026-06-13T12:12:36.823Z"
+  },
+  {
+    "_id": "6a2d4934eee06477b1650227",
+    "title": "TaskFlow",
+    "slug": "taskflow",
+    "shortDescription": "A collaborative task manager with real-time updates and team workspaces.",
+    "fullDescription": "TaskFlow is a team productivity application that supports project boards, assignees, due dates, and activity feeds. It emphasizes clarity, fast interactions, and reliable state synchronization across clients.",
+    "thumbnail": "/images/projects/taskflow-thumb.jpg",
+    "techStack": [
+      "Next.js",
+      "TypeScript",
+      "PostgreSQL",
+      "Prisma",
+      "Socket.io"
+    ],
+    "githubUrl": "https://github.com/example/taskflow",
+    "liveDemoUrl": "https://taskflow.example.com",
+    "features": [
+      "Kanban boards with drag-and-drop",
+      "Real-time collaboration",
+      "Role-based workspace access",
+      "Activity timeline and notifications"
+    ],
+    "architecture": "Next.js App Router for UI and API routes, PostgreSQL for relational task data, Prisma ORM for type-safe queries, and Socket.io for live board updates.",
+    "challenges": [
+      "Handling concurrent edits on shared boards",
+      "Designing permission boundaries across workspaces",
+      "Keeping websocket reconnect logic resilient"
+    ],
+    "learnings": [
+      "Optimistic UI improves perceived performance for drag-and-drop",
+      "Event ordering matters for collaborative state",
+      "Typed data layers catch integration bugs early"
+    ],
+    "galleryImages": [
+      "/images/projects/taskflow-1.jpg",
+      "/images/projects/taskflow-2.jpg"
+    ],
+    "featured": true,
+    "__v": 0,
+    "createdAt": "2026-06-13T12:12:36.823Z",
+    "updatedAt": "2026-06-13T12:12:36.823Z"
+  },
+  {
+    "_id": "6a2d4934eee06477b1650225",
+    "title": "QuickCrave - FOOD Delivery app",
+    "slug": "quickcrave",
+    "shortDescription": "A real-time food delivery app featuring an AI Chatbot, live GPS tracking for riders via WebSockets, and a fast, responsive UI.",
+    "fullDescription": "QuickCrave is a comprehensive food delivery platform featuring a real-time ordering system, live GPS tracking via WebSockets, and a conversational AI Chatbot powered by Dialogflow for an intuitive ordering experience. It utilizes an asynchronous architecture to support robust role-based functionality for Customers, Riders, and Admins.",
+    "thumbnail": "/quickCrave.png",
+    "techStack": [
+      "FastAPI",
+      "MongoDB",
+      "Redis",
+      "WebSockets",
+      "React",
+      "Vite",
+      "Tailwind CSS",
+      "Dialogflow"
+    ],
+    "githubUrl": "https://github.com/Vanshika-v13/QuickCrave-Food-Delievery-Project",
+    "liveDemoUrl": "https://quick-crave-food-delievery-project.vercel.app/",
+    "features": [
+      "Conversational AI ordering with Dialogflow",
+      "Real-time live GPS tracking using WebSockets",
+      "Role-Based Access for Admins, Riders, and Customers",
+      "In-memory session cart management via Redis"
+    ],
+    "architecture": "FastAPI backend for high concurrency, utilizing motor for asynchronous MongoDB operations. WebSocket rooms group users by active orders, with Redis managing state and GPS tracking deduplication. The React frontend interacts seamlessly with the AI webhook and real-time sockets.",
+    "challenges": [
+      "Managing high-frequency WebSocket GPS broadcasts",
+      "Securely linking external Dialogflow sessions to authenticated users",
+      "Preventing race conditions during order state transitions"
+    ],
+    "learnings": [
+      "Throttling and caching WebSocket payloads in Redis significantly saves bandwidth",
+      "Asynchronous database drivers are critical for non-blocking socket handling",
+      "In-memory session management creates seamless chatbot-to-database flows"
+    ],
+    "galleryImages": [
+      "/quickCrave.png"
+    ],
+    "featured": true,
+    "__v": 0,
+    "createdAt": "2026-06-13T12:12:36.821Z",
+    "updatedAt": "2026-06-13T12:12:36.821Z"
+  },
+  {
+    "_id": "6a2d4934eee06477b1650228",
+    "title": "WeatherLens",
+    "slug": "weatherlens",
+    "shortDescription": "Location-aware weather dashboard with forecasts and interactive maps.",
+    "fullDescription": "WeatherLens aggregates forecast data from external APIs into a clean dashboard with hourly and weekly views, saved locations, and map-based exploration.",
+    "thumbnail": "/images/projects/weatherlens-thumb.jpg",
+    "techStack": [
+      "Vue.js",
+      "Vite",
+      "OpenWeather API",
+      "Chart.js"
+    ],
+    "githubUrl": "https://github.com/example/weatherlens",
+    "liveDemoUrl": "https://weatherlens.example.com",
+    "features": [
+      "Current conditions and 7-day forecast",
+      "Geolocation and saved cities",
+      "Interactive temperature charts",
+      "Dark mode support"
+    ],
+    "architecture": "Vue 3 SPA with composable data-fetching layers, cached API responses in memory, and Chart.js for visualization. External weather APIs are proxied to protect keys.",
+    "challenges": [
+      "Normalizing data from multiple API response shapes",
+      "Managing rate limits on free-tier weather APIs",
+      "Rendering performant charts on mobile devices"
+    ],
+    "learnings": [
+      "Client-side caching reduces redundant API calls",
+      "Composable hooks keep weather logic reusable",
+      "Graceful degradation matters when third-party APIs fail"
+    ],
+    "galleryImages": [
+      "/images/projects/weatherlens-1.jpg"
+    ],
+    "featured": false,
+    "__v": 0,
+    "createdAt": "2026-06-13T12:12:36.823Z",
+    "updatedAt": "2026-06-13T12:12:36.823Z"
+  }
+]
