@@ -368,6 +368,62 @@ const projects = [
     gallery: ['/TaskSync.png'],
     featured: false,
   },
+  /* ── Smart Utility Suite ────────────────────────────────────────── */
+  {
+    id: 'smartutilitysuite',
+    slug: 'smartutilitysuite',
+    title: 'Smart Utility Suite — Multi-Utility Web App',
+    shortDescription:
+      'A modern multi-utility web application that combines essential productivity tools like EMI calculator, GST calculator, currency converter, password generator, QR generator, JSON formatter, and word counter. Built to simplify everyday digital tasks in one unified platform.',
+    description:
+      'Smart Utility Suite is a sleek, all-in-one productivity toolkit designed to streamline everyday digital tasks. ' +
+      'It bundles seven essential utilities — EMI Calculator, GST Calculator, Currency Converter, Password Generator, QR Code Generator, JSON Formatter, and Word & Character Counter — into a single, cohesive interface. ' +
+      'Built with React and Vite for blazing-fast performance, the application features a modern SaaS-inspired dashboard with intuitive sidebar navigation, allowing users to seamlessly switch between tools without page reloads. ' +
+      'Each utility is self-contained with clean input validation, real-time output, and copy/reset functionality, delivering a polished experience that feels like a professional-grade product.',
+    thumbnail: '/SmartSuite.png',
+    technologies: [
+      'React',
+      'Vite',
+      'JavaScript',
+      'CSS',
+    ],
+    githubUrl: 'https://github.com/Vanshika-v13/Smart-Suite',
+    liveUrl: 'https://smart-suite-coral.vercel.app/',
+    features: [
+      {
+        title: 'Unified Dashboard',
+        description:
+          'A single-page SaaS-style interface with sidebar navigation enabling instant access to all seven utilities without page reloads.',
+      },
+      {
+        title: 'EMI & GST Calculators',
+        description:
+          'Precision financial tools with real-time computation, detailed breakdowns, and clean result cards for loan planning and tax estimation.',
+      },
+      {
+        title: 'Currency Converter',
+        description:
+          'Live currency conversion supporting multiple global currencies with an intuitive swap interface and instant rate lookups.',
+      },
+      {
+        title: 'Password Generator',
+        description:
+          'Configurable strong-password generator with options for length, character types, and one-click copy to clipboard.',
+      },
+      {
+        title: 'QR Code Generator',
+        description:
+          'Instant QR code creation from any text or URL input, with download capability for generated codes.',
+      },
+      {
+        title: 'JSON Formatter & Word Counter',
+        description:
+          'Developer-friendly JSON beautifier with syntax validation, plus a comprehensive word and character counting tool for writers and editors.',
+      },
+    ],
+    gallery: ['/SmartSuite.png'],
+    featured: false,
+  },
 ];
 
 export default projects;
